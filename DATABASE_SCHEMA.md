@@ -183,4 +183,13 @@ ADD KEY `fkIdx_264` (`coach_id`),
 ADD KEY `fkIdx_310` (`sports_ground_id`),
 ADD CONSTRAINT `FK_262` FOREIGN KEY (`coach_id`) REFERENCES `coach` (`id`),
 ADD CONSTRAINT `FK_308` FOREIGN KEY (`sports_ground_id`) REFERENCES `sports_ground` (`id`);
+
+ALTER TABLE `sportsman` ADD `surname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL AFTER `name`;
+ALTER TABLE `coach` ADD `surname` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL AFTER `name`;
+ALTER TABLE `coach` ADD `vat_number` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL AFTER `phone`;
+ALTER TABLE `sports_ground` ADD `vat_number` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL AFTER `phone`;
+ALTER TABLE `coach` CHANGE `address_id` `address_id` INT(11) NULL, CHANGE `cover_photo_id` `cover_photo_id` INT(11) NULL;
+ALTER TABLE `sports_ground` CHANGE `address_id` `address_id` INT(11) NULL, CHANGE `cover_photo_id` `cover_photo_id` INT(11) NULL, CHANGE `profile_photo_id` `profile_photo_id` INT(11) NULL;
+ALTER TABLE `sportsman` CHANGE `phone` `phone` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_czech_ci NULL;
+
 ```
