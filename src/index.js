@@ -1,67 +1,31 @@
-import dotenv from 'dotenv-flow';
-import express from 'express';
-import cors from 'cors';
-import { ApolloServer, gql } from 'apollo-server-express';
-import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
-
-import { getConnection } from './libs/connection';
-
-import rootResolver from './modules/rootResolver';
+import dotenv from "dotenv-flow";
+import express from "express";
+import cors from "cors";
+import mysql from "mysql";
 
 dotenv.config();
 
-const typeDefs = gql`
-  type Query {
-    todo: String!
-  }
+const mysqlConnection = mysql.createConnection({
+	host: process.env.MYSQL_HOST,
+	port: process.env.MYSQL_PORT,
+	user: process.env.MYSQL_USER,
+	password: process.env.MYSQL_PASSWORD,
+	database: process.env.MYSQL_DATABASE,
+});
 
-  type AuthInfo {
-    token: String!
-  }
+const app = express();
+app.use(cors());
 
-  type Mutation {
-    signin(email: String!, password: String!): AuthInfo!
-  }
-`;
+mysqlConnection.connect((err) => {
+	if (err) {
+		console.log({ err });
+		return;
+	}
+	console.log("connected as id " + mysqlConnection.threadId);
+});
 
-const main = async () => {
-  const app = express();
+const port = process.env.PORT || 4000;
 
-  app.disable('x-powered-by');
-  app.use(cors());
-
-  let dbConnection = null;
-
-  const apolloServer = new ApolloServer({
-    typeDefs,
-    resolvers: rootResolver,
-    context: async ({ req, res }) => {
-      if (!dbConnection) {
-        dbConnection = await getConnection();
-      }
-      const auth = req.headers.Authorization || '';
-
-      return {
-        req,
-        res,
-        dbConnection,
-        auth,
-      };
-    },
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
-  });
-
-  await apolloServer.start();
-
-  apolloServer.applyMiddleware({ app, cors: false });
-
-  const port = process.env.PORT || 4000;
-
-  app.get('/', (_, res) => res.redirect('/graphql'));
-
-  app.listen(port, () => {
-    console.info(`Server started at http://localhost:${port}/graphql`);
-  });
-};
-
-main();
+app.listen(port, () => {
+	console.info(`Server started at http://localhost:${port}`);
+});
