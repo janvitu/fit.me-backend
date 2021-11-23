@@ -25,7 +25,8 @@
     "graphql": "^15.5.3",
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.5.4",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "backpack-core": "^0.8.4",
