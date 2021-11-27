@@ -1,106 +1,69 @@
 import dotenv from "dotenv-flow";
 import express from "express";
 import cors from "cors";
+import mariadb from "mariadb";
+import cookieParser from "cookie-parser";
 import { ApolloServer, gql } from "apollo-server-express";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 
-import { getConnection } from "./libs/connection";
-
-import rootResolver from "./modules/rootResolver";
+import { typeDefs, rootResolver } from "./schema";
+import verifyEmail from "./middleware/verifyEmail.middleware";
 
 dotenv.config();
 
-const typeDefs = gql`
-	type Query {
-		todo: String!
-	}
-	type Sportsman {
-		name: String!
-		surname: String!
-		email: String!
-		password: String!
-		phone: String
-	}
-	type AuthInfo {
-		sportsman: Sportsman!
-		token: String!
-	}
-	type Mutation {
-		sportsmanSignIn(email: String!, password: String!): AuthInfo!
-		sportsmanSignUp(
-			name: String!
-			surname: String!
-			email: String!
-			password: String!
-			secondPassword: String!
-		): Boolean
-		coachSignUp(
-			name: String!
-			surname: String!
-			email: String!
-			password: String!
-			secondPassword: String!
-			vat_number: String
-		): Boolean
-		sportsgroundSignUp(
-			name: String!
-			address: {
-				street: String!
-				city: String!
-				zip: String!
-				country: String
-			}
-			phone: String
-			email: String!
-			password: String!
-			secondPassword: String!
-			vat_number: String
-		): Boolean
-	}
-`;
-
 const main = async () => {
-	const app = express();
+  const app = express();
 
-	app.disable("x-powered-by");
-	app.use(cors());
+  app.disable("x-powered-by");
+  app.use(cors());
+  app.use(cookieParser());
 
-	let dbConnection = null;
+  const db = await mariadb
+    .createConnection({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
 
-	const apolloServer = new ApolloServer({
-		typeDefs,
-		resolvers: rootResolver,
-		formatError: (error) => {
-			console.log(error);
-			return error;
-		},
-		context: async ({ req, res }) => {
-			if (!dbConnection) {
-				dbConnection = await getConnection();
-			}
-			const auth = req.headers.Authorization || "";
+  const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers: rootResolver,
+    formatError: (error) => {
+      console.log(error);
+      return error;
+    },
+    context: async ({ req, res }) => {
+      const auth = req.headers.Authorization || "";
 
-			return {
-				req,
-				res,
-				dbConnection,
-				auth,
-			};
-		},
-		plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
-	});
+      return {
+        req,
+        res,
+        db,
+        auth,
+      };
+    },
+    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+  });
 
-	await apolloServer.start();
+  await apolloServer.start();
 
-	apolloServer.applyMiddleware({ app, cors: false });
+  apolloServer.applyMiddleware({ app, cors: false });
 
-	const port = process.env.PORT || 4000;
+  const port = process.env.PORT || 4000;
 
-	app.get("/", (_, res) => res.redirect("/graphql"));
+  // ? this handeler expects jwt token as secret in path in this format: { id: user.id }
+  app.get("/verify-account/:secret", verifyEmail);
 
-	app.listen(port, () => {
-		console.info(`Server started at http://localhost:${port}/graphql`);
-	});
+  app.get("/", (_, res) => res.redirect("/graphql"));
+
+  app.listen(port, () => {
+    console.info(`Server started at http://localhost:${port}/graphql`);
+  });
 };
 
 main();

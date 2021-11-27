@@ -19,11 +19,13 @@
     "apollo-server-express": "^3.3.0",
     "argon2": "^0.28.2",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.1",
     "graphql": "^15.5.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mariadb": "^2.5.4",
     "mysql": "^2.18.1",
     "yup": "^0.32.11"
@@ -32,6 +34,7 @@
     "backpack-core": "^0.8.4",
     "nodemon": "^2.0.12",
     "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.0",
     "touch": "^3.1.0"
   }
 }
