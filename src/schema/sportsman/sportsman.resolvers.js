@@ -1,7 +1,9 @@
 import * as argon2 from "argon2";
 
-import { createUser, getUserByEmail, updateAccRef } from "../../models/User";
+import User from "../../models/User";
+import sendVerifyEmail from "../../utils/sendVerificationMail";
 import { createUsername } from "../../utils/stringNormalization";
+import { createToken } from "../../utils/token";
 
 const resolvers = {
   Query: {},
@@ -10,7 +12,7 @@ const resolvers = {
       const { email, password, name, surname } = args;
       const accref = "sportsman_id";
 
-      let user = (await db.query("SELECT * FROM user WHERE email = ?", [email]))[0];
+      let user = await User.getUserByEmail(email, db);
 
       if (user && user[accref]) {
         throw new Error("User already exists");
@@ -27,11 +29,13 @@ const resolvers = {
       )[0];
 
       if (!user) {
-        await createUser({ email, password }, { db });
-        user = await getUserByEmail(email, db);
+        await User.createUser({ email, password }, { db });
+        user = await User.getUserByEmail(email, db);
+        const token = createToken({ id: user.id, email: user.email });
+        await sendVerifyEmail(email, token);
       }
 
-      await updateAccRef({ user, ref: sportsman, accref }, { db });
+      await User.updateAccRef({ user, ref: sportsman, accref }, { db });
 
       return true;
     },

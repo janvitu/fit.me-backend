@@ -1,4 +1,4 @@
-import { createUser, getUserByEmail, updateAccRef } from "../../models/User";
+import User from "../../models/User";
 import { createUsername } from "../../utils/stringNormalization";
 
 const resolvers = {
@@ -7,23 +7,29 @@ const resolvers = {
     createSportsground: async (_, args, { db }) => {
       const { name, street, city, zip, country, email, password, vat_number } = args;
       const accref = "sports_ground_id";
-      let user = getUserByEmail(email, db);
+      let user = User.getUserByEmail(email, db);
 
       if (user && user[accref]) {
         throw new Error("User already exists");
       }
 
       const username = createUsername(name);
-      const sportsground = await db.query(
-        "INSERT INTO sports_ground (name, username, vat_number) VALUES (?, ?, ?)",
-        [name, username, vat_number],
-      );
+      await db.query("INSERT INTO sports_ground (name, username, vat_number) VALUES (?, ?, ?)", [
+        name,
+        username,
+        vat_number,
+      ]);
+      const sportsground = (
+        await db.query("SELECT * FROM sports_ground where username = ?", [username])
+      )[0];
 
       if (!user) {
-        user = await createUser({ email, password }, { db });
+        await User.createUser({ email, password }, { db });
+        user = await User.getUserByEmail(email, db);
+        await sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
       }
 
-      await updateAccRef({ user, ref: sportsground, accref }, { db });
+      await User.updateAccRef({ user, ref: sportsground, accref }, { db });
 
       return true;
     },
