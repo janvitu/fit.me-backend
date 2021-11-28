@@ -56,7 +56,7 @@ const main = async () => {
 
   const port = process.env.PORT || 4000;
 
-  // ? this handeler expects jwt token as secret in path in this format: { id: user.id }
+  // ? this handeler expects jwt token as secret in path in this format: { id: user.id, email: user.email }
   app.get("/verify-account/:secret", verifyEmail);
 
   app.get("/", (_, res) => res.redirect("/graphql"));

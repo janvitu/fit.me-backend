@@ -16,4 +16,7 @@ export default gql`
   type Query {
     userSignIn(email: String!, password: String!, accType: String): UserResponse
   }
+  type Mutation {
+    resetPassword(email: String!, originPassword: String!, newPassword: String!): Boolean
+  }
 `;
