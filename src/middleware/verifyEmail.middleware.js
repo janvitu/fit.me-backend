@@ -27,7 +27,5 @@ export default async function verifyEmail(req, res, next) {
   });
 
   db.end();
-  res.status(200).json({
-    message: "OK",
-  });
+  res.redirect(process.env.REDIRECT_URL);
 }
