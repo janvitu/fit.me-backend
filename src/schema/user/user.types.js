@@ -1,13 +1,52 @@
 import { gql } from "apollo-server-core";
 
 export default gql`
+  type Address {
+    id: ID
+    street: String
+    number: Int
+    city: String
+    region: String
+    state: String
+    zip: String
+  }
+  type Sportsground {
+    id: ID!
+    name: String!
+    username: String!
+    address_id: ID!
+    address: Address!
+  }
+  type Coach {
+    id: ID!
+    username: String!
+    name: String!
+    surname: String!
+    published: Boolean!
+    vat_number: String!
+    phone: String
+    address: Address
+    specializations: [String]
+    reqirements: [String]
+    description: String
+    cover_photo_id: ID
+    profile_photo_id: ID
+  }
+  type Sportsman {
+    id: ID!
+    username: String!
+    name: String!
+    surname: String!
+    phone: String
+    address: Address
+  }
   type User {
     id: ID!
     email: String!
     verified: Boolean!
-    coach_id: ID
-    sportsman_id: ID
-    sports_group_id: ID
+    sportsground: Sportsground
+    coach: Coach
+    sportsman: Sportsman
   }
   type UserResponse {
     user: User
@@ -15,8 +54,11 @@ export default gql`
   }
   type Query {
     userSignIn(email: String!, password: String!, accType: String): UserResponse
+    getUser(email: String!): User
   }
   type Mutation {
     resetPassword(email: String!, originPassword: String!, newPassword: String!): Boolean
+    forgotPassword(email: String!): Boolean
+    resetForgotPassword(token: String!, newPassword: String!): Boolean
   }
 `;
