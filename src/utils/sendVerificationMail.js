@@ -1,15 +1,7 @@
-import nodemailer from "nodemailer";
+import initMailer from "./nodemailerConnection";
 
-export default async function sendVerifyEmail(email, token) {
-  const mailer = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    auth: {
-      user: process.env.G_USER,
-      pass: process.env.G_PASS,
-    },
-  });
-
+export default function sendVerifyEmail(email, token) {
+  const mailer = initMailer();
   const data = {
     from: process.env.G_USER,
     to: email,
