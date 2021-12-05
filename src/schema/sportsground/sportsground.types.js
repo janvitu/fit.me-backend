@@ -10,7 +10,7 @@ const typeDefs = gql`
       country: String!
       email: String!
       password: String!
-      vat_number: String!
+      vat_number: Int!
     ): Boolean
   }
 `;

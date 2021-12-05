@@ -31,8 +31,7 @@ const resolvers = {
       if (!user) {
         await User.createUser({ email, password }, { db });
         user = await User.getUserByEmail(email, db);
-        const token = createToken({ id: user.id, email: user.email });
-        await sendVerifyEmail(email, token);
+        sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
       }
 
       await User.updateAccRef({ user, ref: sportsman, accref }, { db });

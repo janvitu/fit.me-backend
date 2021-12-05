@@ -5,7 +5,7 @@ const typeDefs = gql`
     createCoach(
       name: String!
       surname: String!
-      vat_number: String!
+      vat_number: Int!
       email: String!
       password: String!
     ): Boolean

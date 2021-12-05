@@ -5,7 +5,7 @@ const resolvers = {
   Query: {},
   Mutation: {
     createCoach: async (_, args, { db }) => {
-      const { name, surname, vat_numbrer, email, password } = args;
+      const { name, surname, vat_number, email, password } = args;
       const accref = "coach_id";
 
       let user = await User.getUserByEmail(email, db);
@@ -17,14 +17,14 @@ const resolvers = {
       const username = createUsername(name + surname);
       await db.query(
         "INSERT INTO coach (name, surname, username, vat_number) VALUES (?, ?, ?, ?)",
-        [name, surname, username, vat_numbrer],
+        [name, surname, username, vat_number],
       );
       const coach = (await db.query("SELECT * FROM coach where username = ?", [username]))[0];
 
       if (!user) {
         await User.createUser({ email, password }, { db });
         user = await User.getUserByEmail(email, db);
-        await sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
+        sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
       }
 
       await User.updateAccRef({ user, ref: coach, accref }, { db });

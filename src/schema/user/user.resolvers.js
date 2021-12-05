@@ -75,26 +75,24 @@ const resolvers = {
   Mutation: {
     forgottenPassword: async (_, args, { db }) => {
       const { email } = args;
-      const userByEmail = (
-        await db.query(`SELECT * FROM user WHERE email = ?`, [email])
-      )[0];
+      const user = getUserByEmail(email, db);
 
-      if (userByEmail === undefined) {
-        throw Error('User does not exist.');
+      if (!user) {
+        throw Error("User does not exist.");
       }
 
       const argonResponse = await argon2.hash(Date.now().toString());
       const lostPasswordHash = argonResponse.substr(argonResponse.length - 20);
 
-      await db.query(
-        `UPDATE user SET password_reset_hash = ? WHERE id = ?`,
-        [lostPasswordHash, userByEmail.id],
-      );
+      await db.query(`UPDATE user SET password_reset_hash = ? WHERE id = ?`, [
+        lostPasswordHash,
+        user.id,
+      ]);
 
       const mailer = initMailer();
       const data = {
         from: process.env.G_USER,
-        to: userByEmail.email,
+        to: user.email,
         subject: "Password reset Mail",
         html: `Pro obnovení hesla klikněte <a href="${process.env.RESET_PASSWORD_MAIL_URL}${lostPasswordHash}">zde</a>`,
       };
@@ -108,20 +106,19 @@ const resolvers = {
     resetPassword: async (_, args, { db }) => {
       const { newPassword, passwordResetHash } = args;
       let userByResetPswdHash = (
-        await db.query(`SELECT * FROM user WHERE password_reset_hash = ?`, [
-          passwordResetHash,
-        ])
+        await db.query(`SELECT * FROM user WHERE password_reset_hash = ?`, [passwordResetHash])
       )[0];
 
       if (userByResetPswdHash === undefined) {
-        throw Error('User with given hash does not exist.');
+        throw Error("User with given hash does not exist.");
       }
 
       let argonHash = await argon2.hash(newPassword);
-      await db.query(
-        `UPDATE user SET password = ?, password_reset_hash = ? WHERE id = ?`,
-        [argonHash, null, userByResetPswdHash.id],
-      );
+      await db.query(`UPDATE user SET password = ?, password_reset_hash = ? WHERE id = ?`, [
+        argonHash,
+        null,
+        userByResetPswdHash.id,
+      ]);
 
       return true;
     },

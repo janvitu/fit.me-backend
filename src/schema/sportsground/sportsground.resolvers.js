@@ -26,7 +26,7 @@ const resolvers = {
       if (!user) {
         await User.createUser({ email, password }, { db });
         user = await User.getUserByEmail(email, db);
-        await sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
+        sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
       }
 
       await User.updateAccRef({ user, ref: sportsground, accref }, { db });
