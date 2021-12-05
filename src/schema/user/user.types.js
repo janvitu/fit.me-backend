@@ -57,8 +57,7 @@ export default gql`
     getUser(email: String!): User
   }
   type Mutation {
-    resetPassword(email: String!, originPassword: String!, newPassword: String!): Boolean
-    forgotPassword(email: String!): Boolean
-    resetForgotPassword(token: String!, newPassword: String!): Boolean
+    forgottenPassword(email: String!): Boolean
+    resetPassword(newPassword: String!, passwordResetHash: String!): Boolean
   }
 `;

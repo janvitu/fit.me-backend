@@ -73,24 +73,55 @@ const resolvers = {
     },
   },
   Mutation: {
+    forgottenPassword: async (_, args, { db }) => {
+      const { email } = args;
+      const userByEmail = (
+        await db.query(`SELECT * FROM user WHERE email = ?`, [email])
+      )[0];
+
+      if (userByEmail === undefined) {
+        throw Error('User does not exist.');
+      }
+
+      const argonResponse = await argon2.hash(Date.now().toString());
+      const lostPasswordHash = argonResponse.substr(argonResponse.length - 20);
+
+      await db.query(
+        `UPDATE user SET password_reset_hash = ? WHERE id = ?`,
+        [lostPasswordHash, userByEmail.id],
+      );
+
+      const mailer = initMailer();
+      const data = {
+        from: process.env.G_USER,
+        to: userByEmail.email,
+        subject: "Password reset Mail",
+        html: `Pro obnovení hesla klikněte <a href="${process.env.RESET_PASSWORD_MAIL_URL}${lostPasswordHash}">zde</a>`,
+      };
+
+      mailer.sendMail(data).catch((err) => {
+        console.log(err);
+      });
+
+      return true;
+    },
     resetPassword: async (_, args, { db }) => {
-      const { email, originPassword, newPassword } = args;
-      const user = await getUserByEmail(email, db);
-      const originPasswordIsValid = await argon2.verify(user.password, originPassword);
+      const { newPassword, passwordResetHash } = args;
+      let userByResetPswdHash = (
+        await db.query(`SELECT * FROM user WHERE password_reset_hash = ?`, [
+          passwordResetHash,
+        ])
+      )[0];
 
-      if (!originPasswordIsValid && !user) {
-        throw new Error("Wrong email or password");
+      if (userByResetPswdHash === undefined) {
+        throw Error('User with given hash does not exist.');
       }
 
-      const passwordHash = await argon2.hash(newPassword);
-      if (user.password === passwordHash) {
-        throw new Error("New password must be different from the old one");
-      }
-      await db
-        .query("UPDATE user SET password = ? WHERE email = ?", [passwordHash, email])
-        .catch(() => {
-          throw new Error("Unexpected error");
-        });
+      let argonHash = await argon2.hash(newPassword);
+      await db.query(
+        `UPDATE user SET password = ?, password_reset_hash = ? WHERE id = ?`,
+        [argonHash, null, userByResetPswdHash.id],
+      );
 
       return true;
     },
