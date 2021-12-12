@@ -31,6 +31,9 @@ const resolvers = {
 
       return true;
     },
+    updateCoach: async (_, args, { db }) => {
+      return true;
+    },
   },
 };
 

@@ -9,6 +9,20 @@ const typeDefs = gql`
       email: String!
       password: String!
     ): Boolean
+    updateCoach(
+      name: String
+      surname: String
+      phone: String
+      vat_number: Int
+      street: String
+      number: Int
+      city: String
+      region: String
+      state: String
+      zip: String
+      description: String
+      specializations: [String]
+    ): Boolean
   }
 `;
 

@@ -1,15 +1,18 @@
-import dotenv from "dotenv-flow";
+import "./utils/dotenvContext.js";
 import express from "express";
 import cors from "cors";
 import mariadb from "mariadb";
+import { supabase } from "./utils/supabaseClient";
+
+import { createAvatar } from "@dicebear/avatars";
+import * as style from "@dicebear/pixel-art-neutral";
+
 import cookieParser from "cookie-parser";
-import { ApolloServer, gql } from "apollo-server-express";
+import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 
 import { typeDefs, rootResolver } from "./schema";
 import verifyEmail from "./middleware/verifyEmail.middleware";
-
-dotenv.config();
 
 const main = async () => {
   const app = express();
@@ -30,6 +33,23 @@ const main = async () => {
       throw new Error(err);
     });
 
+  // const svg = createAvatar(style, {
+  //   name: "username",
+  // });
+
+  // const res = await supabase.storage
+  //   .from("fitme-imgs")
+  //   .upload("public/avatar.svg", svg, {
+  //     contentType: "image/svg+xml",
+  //   })
+  //   .then(({ data, error }) => {
+  //     if (!error) {
+  //       console.log(data.Key);
+  //       console.log(`${supabase.storage.url}/object/public/${data.Key}`);
+  //     }
+  //     console.log(error);
+  //   });
+
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers: rootResolver,
@@ -44,6 +64,7 @@ const main = async () => {
         req,
         res,
         db,
+        supabase,
         auth,
       };
     },

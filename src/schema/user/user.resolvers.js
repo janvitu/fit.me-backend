@@ -1,8 +1,11 @@
 import argon2 from "argon2";
 import { getUserByEmail } from "../../models/User";
 import jwt from "jsonwebtoken";
-import { createToken } from "../../utils/token";
+import { createToken, verifyToken } from "../../utils/token";
 import initMailer from "../../utils/nodemailerConnection";
+import { getCoach } from "../../models/Coach";
+import { getSportsground } from "../../models/Sportsground";
+import { getSportsman } from "../../models/Sportsman";
 
 const resolvers = {
   Query: {
@@ -29,7 +32,13 @@ const resolvers = {
         throw new Error("Invalid password");
       }
 
-      const token = createToken({ id: user.id, email: user.email });
+      const token = createToken({
+        id: user.id,
+        email: user.email,
+        sportsman: user.sportsman_id,
+        coach: user.coach_id,
+        sportsground: user.sports_ground_id,
+      });
       return {
         token: token,
         user: { ...user },
@@ -37,20 +46,11 @@ const resolvers = {
     },
     getUser: async (_, args, { db }) => {
       const { email } = args;
-      const user = await db.query(`SELECT * FROM users WHERE email = ?`, [email])[0];
-      const sportsman = await db.query(`SELECT * FROM sportsmen WHERE id = ?`, [
-        user.sportsman_id,
-      ])[0];
-      const sportsmanAddress = await db.query(`SELECT * FROM adresses WHERE id = ?`, [
-        sportsman.adress_id,
-      ])[0];
-      const coach = await db.query(`SELECT * FROM coaches WHERE id = ?`, [user.coach_id])[0];
-      const sportsground = await db.query(`SELECT * FROM sports_grounds WHERE id = ?`, [
-        user.sports_ground_id,
-      ])[0];
-      const sportsgroundAddress = await db.query(`SELECT * FROM adresses WHERE id = ?`, [
-        sportsground.adress_id,
-      ])[0];
+      const user = await getUserByEmail(email, db);
+
+      const sportsman = await getSportsman(user.sportsman_id, db);
+      const coach = await getCoach(user.coach_id, db);
+      const sportsground = await getSportsground(user.sports_ground_id, db);
 
       return {
         ...user,
@@ -65,9 +65,6 @@ const resolvers = {
         },
         sportsground: {
           ...sportsground,
-          address: {
-            ...sportsgroundAddress,
-          },
         },
       };
     },
@@ -121,6 +118,23 @@ const resolvers = {
       ]);
 
       return true;
+    },
+    changePassword: async (_, args, { db, auth }) => {
+      const { oldPassword, newPassword } = args;
+      const decoded = verifyToken(auth);
+
+      const user = await getUserByEmail(decoded.email, db);
+      if (!user) {
+        throw new Error("User not found");
+      }
+
+      const isValidPassword = await argon2.verify(user.password, oldPassword);
+      if (!isValidPassword) {
+        throw new Error("Invalid password");
+      }
+
+      const argonHash = await argon2.hash(newPassword);
+      await db.query(`UPDATE user SET password = ? WHERE id = ?`, [argonHash, user.id]);
     },
   },
 };

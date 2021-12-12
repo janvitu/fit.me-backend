@@ -33,6 +33,43 @@ const resolvers = {
 
       return true;
     },
+    updateSportsground: async (_, args, { db, auth }) => {
+      const {
+        name,
+        openning_hours_from,
+        openning_hours_to,
+        web,
+        phone,
+        description,
+        cover_photo_url,
+        street,
+        number,
+        city,
+        region,
+        state,
+        zip,
+      } = args;
+      const decoded = jwt.verify(auth, process.env.JWT_SECRET);
+      db.query(
+        `UPDATE sports_ground SET name = ?, openning_hours_from = ?, openning_hours_to = ?, web = ?, phone = ?, description = ?, cover_photo_url = ?, street = ?, number = ?, city = ?, region = ?, state = ?, zip = ? WHERE id = ${decoded.sportsground}`,
+        [
+          name,
+          openning_hours_from,
+          openning_hours_to,
+          web,
+          phone,
+          description,
+          cover_photo_url,
+          street,
+          number,
+          city,
+          region,
+          state,
+          zip,
+        ],
+      );
+      return true;
+    },
   },
 };
 

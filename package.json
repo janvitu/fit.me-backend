@@ -15,6 +15,9 @@
     "prettier": "prettier --write \"src/**/*.js\" README.md"
   },
   "dependencies": {
+    "@dicebear/avatars": "^4.10.1",
+    "@dicebear/pixel-art-neutral": "^4.10.1",
+    "@supabase/supabase-js": "^1.28.5",
     "apollo-server-core": "^3.3.0",
     "apollo-server-express": "^3.3.0",
     "argon2": "^0.28.2",
