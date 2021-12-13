@@ -78,8 +78,7 @@ const resolvers = {
         throw Error("User does not exist.");
       }
 
-      const argonResponse = await argon2.hash(Date.now().toString());
-      const lostPasswordHash = argonResponse.substr(argonResponse.length - 20);
+      const lostPasswordHash = (Math.random() + 1).toString(36).substring(2);
 
       await db
         .query(`UPDATE user SET password_reset_hash = ? WHERE id = ?`, [lostPasswordHash, user.id])
