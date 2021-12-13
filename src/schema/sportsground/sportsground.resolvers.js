@@ -33,8 +33,9 @@ const resolvers = {
 
       return true;
     },
-    updateSportsground: async (_, args, { db, auth }) => {
+    updateSportsground: async (_, args, { db }) => {
       const {
+        token,
         name,
         openning_hours_from,
         openning_hours_to,
@@ -49,7 +50,7 @@ const resolvers = {
         state,
         zip,
       } = args;
-      const decoded = jwt.verify(auth, process.env.JWT_SECRET);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
       db.query(
         `UPDATE sports_ground SET name = ?, openning_hours_from = ?, openning_hours_to = ?, web = ?, phone = ?, description = ?, cover_photo_url = ?, street = ?, number = ?, city = ?, region = ?, state = ?, zip = ? WHERE id = ${decoded.sportsground}`,
         [

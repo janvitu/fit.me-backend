@@ -48,9 +48,9 @@ const resolvers = {
 
       return true;
     },
-    updateSportsman: async (_, args, { db, auth }) => {
-      const { name, surname, phone, street, number, city, region, state, zip } = args;
-      const { id, email, sportsman } = jwt.verify(auth, process.env.JWT_SECRET);
+    updateSportsman: async (_, args, { db }) => {
+      const { token, name, surname, phone, street, number, city, region, state, zip } = args;
+      const { id, email, sportsman } = jwt.verify(token, process.env.JWT_SECRET);
       db.query(
         `UPDATE sportsman SET name = ?, surname = ?, phone = ?, street = ?, number = ?, city = ?, region = ?, state = ?, zip = ? WHERE id = ${sportsman}`,
         [name, surname, phone, street, number, city, region, state, zip],

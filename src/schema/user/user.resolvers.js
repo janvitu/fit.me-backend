@@ -74,7 +74,6 @@ const resolvers = {
     forgotenPassword: async (_, args, { db }) => {
       const { email } = args;
       const user = await getUserByEmail(email, db);
-      console.log(user.email);
       if (!user) {
         throw Error("User does not exist.");
       }
@@ -90,7 +89,6 @@ const resolvers = {
 
       sendPasswordResetEmail(email, lostPasswordHash);
 
-      console.log(true);
       return true;
     },
     resetPassword: async (_, args, { db }) => {
@@ -98,7 +96,6 @@ const resolvers = {
       let user = (
         await db.query(`SELECT * FROM user WHERE password_reset_hash = ?`, [passwordResetHash])
       )[0];
-      console.log(user);
 
       if (!user) {
         throw Error("User with given hash does not exist.");
@@ -113,9 +110,16 @@ const resolvers = {
 
       return true;
     },
-    changePassword: async (_, args, { db, auth }) => {
-      const { oldPassword, newPassword } = args;
-      const decoded = verifyToken(auth);
+    changePassword: async (_, args, { db }) => {
+      const { token, oldPassword, newPassword } = args;
+      if (!token) {
+        throw new Error("No token provided");
+      }
+
+      const decoded = verifyToken(token);
+      if (!decoded) {
+        throw new Error("Invalid token");
+      }
 
       const user = await getUserByEmail(decoded.email, db);
       if (!user) {
@@ -129,6 +133,8 @@ const resolvers = {
 
       const argonHash = await argon2.hash(newPassword);
       await db.query(`UPDATE user SET password = ? WHERE id = ?`, [argonHash, user.id]);
+
+      return true;
     },
   },
 };

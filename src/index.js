@@ -18,7 +18,12 @@ const main = async () => {
   const app = express();
 
   app.disable("x-powered-by");
-  app.use(cors());
+  app.use(
+    cors({
+      origin: "*",
+      credentials: true,
+    }),
+  );
   app.use(cookieParser());
 
   const db = await mariadb
@@ -58,7 +63,7 @@ const main = async () => {
       return error;
     },
     context: async ({ req, res }) => {
-      const auth = req.cookies.auth_token || "";
+      const auth = req.cookies.token || "";
 
       return {
         req,

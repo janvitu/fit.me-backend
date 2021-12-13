@@ -13,6 +13,7 @@ const typeDefs = gql`
       vat_number: Int!
     ): Boolean
     updateSportsground(
+      token: String!
       name: String
       opening_hours_from: String
       opening_hours_to: String
