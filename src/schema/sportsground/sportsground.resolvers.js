@@ -67,7 +67,10 @@ const resolvers = {
           state,
           zip,
         ],
-      );
+      ).catch((err) => {
+        throw new Error(err);
+      });
+
       return true;
     },
   },

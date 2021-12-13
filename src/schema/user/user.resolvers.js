@@ -2,6 +2,7 @@ import argon2 from "argon2";
 import { getUserByEmail } from "../../models/User";
 import jwt from "jsonwebtoken";
 import { createToken, verifyToken } from "../../utils/token";
+import { sendPasswordResetEmail } from "../../utils/sendPasswordResetEmail";
 import initMailer from "../../utils/nodemailerConnection";
 import { getCoach } from "../../models/Coach";
 import { getSportsground } from "../../models/Sportsground";
@@ -70,10 +71,10 @@ const resolvers = {
     },
   },
   Mutation: {
-    forgottenPassword: async (_, args, { db }) => {
+    forgotenPassword: async (_, args, { db }) => {
       const { email } = args;
-      const user = getUserByEmail(email, db);
-
+      const user = await getUserByEmail(email, db);
+      console.log(user.email);
       if (!user) {
         throw Error("User does not exist.");
       }
@@ -81,32 +82,25 @@ const resolvers = {
       const argonResponse = await argon2.hash(Date.now().toString());
       const lostPasswordHash = argonResponse.substr(argonResponse.length - 20);
 
-      await db.query(`UPDATE user SET password_reset_hash = ? WHERE id = ?`, [
-        lostPasswordHash,
-        user.id,
-      ]);
+      await db
+        .query(`UPDATE user SET password_reset_hash = ? WHERE id = ?`, [lostPasswordHash, user.id])
+        .catch((err) => {
+          throw new Error(err);
+        });
 
-      const mailer = initMailer();
-      const data = {
-        from: process.env.G_USER,
-        to: user.email,
-        subject: "Password reset Mail",
-        html: `Pro obnovení hesla klikněte <a href="${process.env.RESET_PASSWORD_MAIL_URL}${lostPasswordHash}">zde</a>`,
-      };
+      sendPasswordResetEmail(email, lostPasswordHash);
 
-      mailer.sendMail(data).catch((err) => {
-        console.log(err);
-      });
-
+      console.log(true);
       return true;
     },
     resetPassword: async (_, args, { db }) => {
       const { newPassword, passwordResetHash } = args;
-      let userByResetPswdHash = (
+      let user = (
         await db.query(`SELECT * FROM user WHERE password_reset_hash = ?`, [passwordResetHash])
       )[0];
+      console.log(user);
 
-      if (userByResetPswdHash === undefined) {
+      if (!user) {
         throw Error("User with given hash does not exist.");
       }
 
@@ -114,7 +108,7 @@ const resolvers = {
       await db.query(`UPDATE user SET password = ?, password_reset_hash = ? WHERE id = ?`, [
         argonHash,
         null,
-        userByResetPswdHash.id,
+        user.id,
       ]);
 
       return true;
