@@ -58,7 +58,7 @@ const main = async () => {
       return error;
     },
     context: async ({ req, res }) => {
-      const auth = req.headers.Authorization || "";
+      const auth = req.cookies.auth_token || "";
 
       return {
         req,
