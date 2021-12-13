@@ -33,6 +33,43 @@ const resolvers = {
       return true;
     },
     updateCoach: async (_, args, { db }) => {
+      const {
+        token,
+        name,
+        surname,
+        phone,
+        vat_number,
+        street,
+        number,
+        city,
+        region,
+        state,
+        zip,
+        description,
+        specializations,
+      } = args;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      db.query(
+        "UPDATE coach SET name = ?, surname = ?, phone = ?, vat_number = ?, street = ?, number = ?, city = ?, region = ?, state = ?, zip = ?, description = ?, specializations = ? WHERE id = ?",
+        [
+          name,
+          surname,
+          phone,
+          vat_number,
+          street,
+          number,
+          city,
+          region,
+          state,
+          zip,
+          description,
+          specializations,
+          decoded.coach,
+        ],
+      ).catch((err) => {
+        console.log(err);
+      });
+
       return true;
     },
   },

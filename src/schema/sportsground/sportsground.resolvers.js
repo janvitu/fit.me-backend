@@ -1,5 +1,6 @@
 import User from "../../models/User";
 import { createUsername } from "../../utils/stringNormalization";
+import jwt from "jsonwebtoken";
 
 const resolvers = {
   Query: {},
@@ -50,27 +51,35 @@ const resolvers = {
         state,
         zip,
       } = args;
+      if (!token) {
+        throw new Error("No token provided");
+      }
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      db.query(
-        `UPDATE sports_ground SET name = ?, openning_hours_from = ?, openning_hours_to = ?, web = ?, phone = ?, description = ?, cover_photo_url = ?, street = ?, number = ?, city = ?, region = ?, state = ?, zip = ? WHERE id = ${decoded.sportsground}`,
-        [
-          name,
-          openning_hours_from,
-          openning_hours_to,
-          web,
-          phone,
-          description,
-          cover_photo_url,
-          street,
-          number,
-          city,
-          region,
-          state,
-          zip,
-        ],
-      ).catch((err) => {
-        throw new Error(err);
-      });
+      if (!decoded) {
+        throw new Error("Invalid token");
+      }
+      await db
+        .query(
+          `UPDATE sports_ground SET name = ?, openning_hours_from = ?, openning_hours_to = ?, web = ?, phone = ?, description = ?, cover_photo_url = ?, street = ?, number = ?, city = ?, region = ?, state = ?, zip = ? WHERE id = ${decoded.sportsground}`,
+          [
+            name,
+            openning_hours_from,
+            openning_hours_to,
+            web,
+            phone,
+            description,
+            cover_photo_url,
+            street,
+            number,
+            city,
+            region,
+            state,
+            zip,
+          ],
+        )
+        .catch((err) => {
+          console.log(err);
+        });
 
       return true;
     },
