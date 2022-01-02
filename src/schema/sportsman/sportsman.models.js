@@ -9,3 +9,7 @@ export const getSportsman = async (id, db) => {
     },
   };
 };
+
+export default {
+  getSportsman,
+};

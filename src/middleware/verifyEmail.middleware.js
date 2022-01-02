@@ -1,22 +1,9 @@
-import mariadb from "mariadb";
-import { verifyUserEmail } from "../models/User";
+// import mariadb from "mariadb";
+import { verifyUserEmail } from "../schema/user/user.models";
 import { verifyToken } from "../utils/token";
 
-/* 
-TODO: figure out how to pass database connection to the middleware
-*/
-export default async function verifyEmail(req, res, next) {
-  const db = await mariadb
-    .createConnection({
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
+export default async function verifyEmail(req, res) {
+  const db = req.db;
   const secret = req.params.secret;
   const decoded = verifyToken(secret);
 
@@ -26,6 +13,5 @@ export default async function verifyEmail(req, res, next) {
     });
   });
 
-  db.end();
   res.redirect(process.env.REDIRECT_URL);
 }

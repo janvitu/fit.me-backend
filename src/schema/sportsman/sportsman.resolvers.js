@@ -2,7 +2,7 @@ import * as argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import { SUPABASE_IMG_STORAGE_OBJECT } from "../../consts";
 
-import User from "../../models/User";
+import User from "../user/user.models";
 import { createDicebearAvatar } from "../../utils/createDicebearAvatar";
 import sendVerifyEmail from "../../utils/sendVerificationMail";
 import { createUsername } from "../../utils/stringNormalization";

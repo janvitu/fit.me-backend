@@ -3,3 +3,7 @@ export const getCoach = async (id, db) => {
 
   return coach;
 };
+
+export default {
+  getCoach,
+};

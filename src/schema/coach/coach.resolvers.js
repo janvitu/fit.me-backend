@@ -1,5 +1,5 @@
 import { createUsername } from "../../utils/stringNormalization";
-import User from "../../models/User";
+import User from "../user/user.models";
 import sendVerifyEmail from "../../utils/sendVerificationMail";
 
 const resolvers = {

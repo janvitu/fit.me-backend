@@ -1,4 +1,4 @@
-import User from "../../models/User";
+import User from "../user/user.models";
 import { createUsername } from "../../utils/stringNormalization";
 import jwt from "jsonwebtoken";
 

@@ -11,3 +11,7 @@ export const getSportsground = async (id, db) => {
     },
   };
 };
+
+export default {
+  getSportsground,
+};

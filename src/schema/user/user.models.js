@@ -34,11 +34,9 @@ export const verifyUserEmail = async (args, { db }) => {
   return true;
 };
 
-const User = {
+export default {
   getUserByEmail,
   createUser,
   updateAccRef,
   verifyUserEmail,
 };
-
-export default User;

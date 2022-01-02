@@ -2,16 +2,16 @@ import "./utils/dotenvContext.js";
 import express from "express";
 import cors from "cors";
 import mariadb from "mariadb";
-import {supabase} from "./utils/supabaseClient";
+import { supabase } from "./utils/supabaseClient";
 
-import {createAvatar} from "@dicebear/avatars";
+import { createAvatar } from "@dicebear/avatars";
 import * as style from "@dicebear/pixel-art-neutral";
 
 import cookieParser from "cookie-parser";
-import {ApolloServer} from "apollo-server-express";
-import {ApolloServerPluginLandingPageGraphQLPlayground} from "apollo-server-core";
+import { ApolloServer } from "apollo-server-express";
+import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 
-import {typeDefs, rootResolver} from "./schema";
+import { typeDefs, rootResolver } from "./schema";
 import verifyEmail from "./middleware/verifyEmail.middleware";
 
 const main = async () => {
@@ -40,7 +40,7 @@ const main = async () => {
       console.log(error);
       return error;
     },
-    context: async ({req, res}) => {
+    context: async ({ req, res }) => {
       const auth = req.cookies.token || "";
 
       return {
@@ -56,12 +56,19 @@ const main = async () => {
 
   await apolloServer.start();
 
-  apolloServer.applyMiddleware({app, cors: false});
+  apolloServer.applyMiddleware({ app, cors: false });
 
   const port = process.env.PORT || 4000;
 
   // ? this handeler expects jwt token as secret in path in this format: { id: user.id, email: user.email }
-  app.get("/verify-account/:secret", verifyEmail);
+  app.get(
+    "/verify-account/:secret",
+    (req, res, next) => {
+      req.db = db;
+      next();
+    },
+    verifyEmail,
+  );
 
   app.get("/", (_, res) => res.redirect("/graphql"));
 

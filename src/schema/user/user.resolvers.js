@@ -1,12 +1,12 @@
 import argon2 from "argon2";
-import { getUserByEmail } from "../../models/User";
+import { getUserByEmail } from "../user/user.models";
 import jwt from "jsonwebtoken";
 import { createToken, verifyToken } from "../../utils/token";
 import { sendPasswordResetEmail } from "../../utils/sendPasswordResetEmail";
 import initMailer from "../../utils/nodemailerConnection";
-import { getCoach } from "../../models/Coach";
-import { getSportsground } from "../../models/Sportsground";
-import { getSportsman } from "../../models/Sportsman";
+import { getCoach } from "../coach/coach.models";
+import { getSportsground } from "../sportsground/sportsground.models";
+import { getSportsman } from "../sportsman/sportsman.models";
 
 const resolvers = {
   Query: {
