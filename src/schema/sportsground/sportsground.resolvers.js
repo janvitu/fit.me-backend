@@ -1,9 +1,22 @@
 import User from "../user/user.models";
 import { createUsername } from "../../utils/stringNormalization";
 import jwt from "jsonwebtoken";
+import { getSportsgroundByUsername, getSportsgrounds } from "./sportsground.models";
 
 const resolvers = {
-  Query: {},
+  Query: {
+    getSportsground: async (_, args, { db }) => {
+      const { username } = args;
+      const sportsground = await getSportsgroundByUsername(username, db);
+
+      return sportsground;
+    },
+    getSportsgrounds: async (_, args, { db }) => {
+      const sportsgrounds = await getSportsgrounds(db);
+
+      return sportsgrounds;
+    },
+  },
   Mutation: {
     createSportsground: async (_, args, { db }) => {
       const { name, street, city, zip, country, email, password, vat_number } = args;

@@ -1,6 +1,10 @@
 import { gql } from "apollo-server-core";
 
 const typeDefs = gql`
+  type Query {
+    getSportsground(username: String!): Sportsground
+    getSportsgrounds: [Sportsground]
+  }
   type Mutation {
     createSportsground(
       name: String!
