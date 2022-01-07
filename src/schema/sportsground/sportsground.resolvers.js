@@ -13,8 +13,27 @@ const resolvers = {
     },
     getSportsgrounds: async (_, args, { db }) => {
       const sportsgrounds = await getSportsgrounds(db);
+      const sportsgroundsFull = sportsgrounds.map(async (sportsground) => {
+        const address = await db.query("SELECT * FROM address WHERE id = ?", [
+          sportsground.address_id,
+        ])[0];
+        const reviews = await db.query("SELECT * FROM review WHERE sports_ground_id = ?", [
+          sportsground.id,
+        ]);
+        const tags = await db.query(
+          "SELECT * FROM sport LEFT JOIN service_sports_ground ON sport.id=service_sports_ground.service_id WHERE service_sports_ground.sports_ground_id = ?",
+          [sportsground.id],
+        );
+        console.log(sportsground.address_id);
+        return {
+          ...sportsground,
+          tags: tags.map((tag) => tag.name),
+          address: address,
+          rating: reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length || null,
+        };
+      });
 
-      return sportsgrounds;
+      return sportsgroundsFull;
     },
   },
   Mutation: {

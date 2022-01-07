@@ -20,6 +20,9 @@ const tempTypeDef = gql`
     username: String!
     address_id: ID!
     address: Address!
+    description: String
+    tags: [String]
+    rating: String
   }
   type Coach {
     id: ID!
