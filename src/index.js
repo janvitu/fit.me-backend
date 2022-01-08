@@ -60,9 +60,12 @@ const main = async () => {
 
   const port = process.env.PORT || 4000;
 
-  // ? this handeler expects jwt token as secret in path in this format: { id: user.id, email: user.email }
+  /**
+   * ? this handeler expects jwt token as secret in path /verify-account/:token
+   *  token should be in format { id: user_id, email: user_email }
+   */
   app.get(
-    "/verify-account/:secret",
+    "/verify-account/:token",
     (req, res, next) => {
       req.db = db;
       next();

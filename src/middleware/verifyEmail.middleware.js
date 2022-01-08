@@ -4,8 +4,8 @@ import { verifyToken } from "../utils/token";
 
 export default async function verifyEmail(req, res) {
   const db = req.db;
-  const secret = req.params.secret;
-  const decoded = verifyToken(secret);
+  const token = req.params.token;
+  const decoded = verifyToken(token);
 
   await verifyUserEmail(decoded, { db }).catch(() => {
     res.status(400).json({
