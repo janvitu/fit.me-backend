@@ -6,12 +6,6 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Databáze: `user_team04`
---
-
--- --------------------------------------------------------
-
---
 -- Struktura tabulky `accepted_payment`
 --
 
@@ -56,17 +50,18 @@ CREATE TABLE `address` (
 --
 
 CREATE TABLE `coach` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `surname` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `published` tinyint(1) DEFAULT 0,
-  `phone` varchar(15) COLLATE utf8_czech_ci DEFAULT NULL,
-  `vat_number` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
-  `specialization` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `requirements` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `description` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `cover_photo_id` int(11) DEFAULT NULL
+                       `id` int(11) NOT NULL,
+                       `username` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                       `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                       `surname` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                       `published` tinyint(1) DEFAULT 0,
+                       `phone` varchar(15) COLLATE utf8_czech_ci DEFAULT NULL,
+                       `vat_number` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
+                       `specialization` text COLLATE utf8_czech_ci DEFAULT NULL,
+                       `requirements` text COLLATE utf8_czech_ci DEFAULT NULL,
+                       `description` text COLLATE utf8_czech_ci DEFAULT NULL,
+                       `profile_photo_id` int(11) DEFAULT NULL,
+                       `cover_photo_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -76,14 +71,15 @@ CREATE TABLE `coach` (
 --
 
 CREATE TABLE `event` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `datetime_from` datetime NOT NULL,
-  `datetime_to` datetime NOT NULL,
-  `datetime_created` datetime NOT NULL,
-  `description` text COLLATE utf8_czech_ci NOT NULL,
-  `sports_ground_id` int(11) DEFAULT NULL,
-  `coach_id` int(11) DEFAULT NULL
+                       `id` int(11) NOT NULL,
+                       `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                       `datetime_from` datetime NOT NULL,
+                       `datetime_to` datetime NOT NULL,
+                       `datetime_created` datetime NOT NULL,
+                       `description` text COLLATE utf8_czech_ci NOT NULL,
+                       `cover_photo_id` int(11) DEFAULT NULL,
+                       `sports_ground_id` int(11) DEFAULT NULL,
+                       `coach_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -121,10 +117,11 @@ CREATE TABLE `message` (
 --
 
 CREATE TABLE `photo` (
-  `id` int(11) NOT NULL,
-  `location` text COLLATE utf8_czech_ci NOT NULL,
-  `coach_id` int(11) DEFAULT NULL,
-  `sports_ground_id` int(11) DEFAULT NULL
+                       `id` int(11) NOT NULL,
+                       `name` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
+                       `location` text COLLATE utf8_czech_ci NOT NULL,
+                       `coach_id` int(11) DEFAULT NULL,
+                       `sports_ground_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -134,13 +131,14 @@ CREATE TABLE `photo` (
 --
 
 CREATE TABLE `review` (
-  `id` int(11) NOT NULL,
-  `stars` int(11) NOT NULL,
-  `comment` text COLLATE utf8_czech_ci DEFAULT NULL,
-  `datetime` datetime DEFAULT current_timestamp(),
-  `sportsman_id` int(11) NOT NULL,
-  `sports_ground_id` int(11) DEFAULT NULL,
-  `coach_id` int(11) DEFAULT NULL
+                        `id` int(11) NOT NULL,
+                        `stars` int(11) NOT NULL,
+                        `comment` text COLLATE utf8_czech_ci DEFAULT NULL,
+                        `datetime` datetime DEFAULT current_timestamp(),
+                        `sportsman_id` int(11) NOT NULL,
+                        `sports_ground_id` int(11) DEFAULT NULL,
+                        `coach_id` int(11) DEFAULT NULL,
+                        `event_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -174,8 +172,9 @@ CREATE TABLE `service_sports_ground` (
 --
 
 CREATE TABLE `sport` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_czech_ci NOT NULL
+                       `id` int(11) NOT NULL,
+                       `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                       `color` varchar(100) COLLATE utf8_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -185,11 +184,12 @@ CREATE TABLE `sport` (
 --
 
 CREATE TABLE `sportsman` (
-  `id` int(11) NOT NULL,
-  `username` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `surname` varchar(255) COLLATE utf8_czech_ci NOT NULL,
-  `phone` varchar(15) COLLATE utf8_czech_ci DEFAULT NULL
+                           `id` int(11) NOT NULL,
+                           `username` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                           `name` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                           `surname` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                           `phone` varchar(15) COLLATE utf8_czech_ci DEFAULT NULL,
+                           `profile_photo_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -313,7 +313,8 @@ ALTER TABLE `review`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fkIdx_102` (`sports_ground_id`),
   ADD KEY `fkIdx_111` (`coach_id`),
-  ADD KEY `fkIdx_241` (`sportsman_id`);
+  ADD KEY `fkIdx_241` (`sportsman_id`),
+  ADD KEY `event_id` (`event_id`);
 
 --
 -- Indexy pro tabulku `service`
@@ -506,7 +507,8 @@ ALTER TABLE `photo`
 ALTER TABLE `review`
   ADD CONSTRAINT `FK_100` FOREIGN KEY (`sports_ground_id`) REFERENCES `sports_ground` (`id`),
   ADD CONSTRAINT `FK_109` FOREIGN KEY (`coach_id`) REFERENCES `coach` (`id`),
-  ADD CONSTRAINT `FK_239` FOREIGN KEY (`sportsman_id`) REFERENCES `sportsman` (`id`);
+  ADD CONSTRAINT `FK_239` FOREIGN KEY (`sportsman_id`) REFERENCES `sportsman` (`id`),
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`);
 
 --
 -- Omezení pro tabulku `sports_ground`
