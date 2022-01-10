@@ -14,6 +14,31 @@ const tempTypeDef = gql`
     state: String
     zip: String
   }
+  type Tag {
+    name: String
+    color: String
+  }
+  type Event {
+    id: ID!
+    name: String!
+    description: String!
+    datetime_from: String!
+    datetime_to: String
+    datetime_created: String!
+    cover_photo_id: Int
+    sports_ground_id: Int!
+    coach_id: Int
+    sportground: Sportsground
+    coach: Coach
+  }
+  type Review {
+    id: ID!
+    stars: Int!
+    comment: String!
+    datetime: String!
+    sportsman_id: Int!
+    sportsman: Sportsman
+  }
   type Sportsground {
     id: ID!
     name: String!
@@ -21,8 +46,10 @@ const tempTypeDef = gql`
     address_id: ID!
     address: Address!
     description: String
-    tags: [String]
+    tags: [Tag]
     rating: String
+    reviews: [Review]
+    events: [Event]
   }
   type Coach {
     id: ID!

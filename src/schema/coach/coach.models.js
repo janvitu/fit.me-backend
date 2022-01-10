@@ -4,20 +4,20 @@ export const getCoach = async (id, db) => {
   return coach;
 };
 
-export const getByUsername = async (username, db) => {
-  const coach = await db.query("SELECT * FROM coach WHERE username = ?", [username])[0];
+export const getCoachByUsername = async (username, db) => {
+  const coach = await db.query("SELECT * FROM coach WHERE username = ?", [username]);
 
-  return coach;
+  return coach[0];
 };
 
-export const getAll = async (db) => {
+export const getCoaches = async (db) => {
   const coaches = await db.query("SELECT * FROM coach");
 
   return coaches;
 };
 
 export default {
-  getCoach,
-  getByUsername,
-  getAll,
+  get: getCoach,
+  getByUsername: getCoachByUsername,
+  getAll: getCoaches,
 };

@@ -1,15 +1,9 @@
 export const getSportsman = async (id, db) => {
   const sportsman = await db.query("SELECT * FROM sportsman WHERE id = ?", [id]);
-  const sportsmanAddress = await db.query("SELECT * FROM address WHERE id = ?", [id]);
 
-  return {
-    ...sportsman,
-    address: {
-      ...sportsmanAddress,
-    },
-  };
+  return sportsman[0];
 };
 
 export default {
-  getSportsman,
+  get: getSportsman,
 };

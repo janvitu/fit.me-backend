@@ -6,7 +6,7 @@ import sendVerifyEmail from "../../utils/sendVerificationMail";
 
 import jwt from "jsonwebtoken";
 
-async function createSportsground(_, args, { db }) {
+async function createSportsground(_, args, { db, mailer }) {
   const { name, street, city, zip, country, email, password, vat_number } = args;
   const accref = "sports_ground_id";
   let user = User.getUserByEmail(email, db);
@@ -26,7 +26,7 @@ async function createSportsground(_, args, { db }) {
   if (!user) {
     await User.createUser({ email, password }, { db });
     user = await User.getUserByEmail(email, db);
-    sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
+    sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 
   await User.updateAccRef({ user, ref: sportsground, accref }, { db });
@@ -78,7 +78,7 @@ async function updateSportsground(_, args, { db }) {
       ],
     )
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 
   return true;

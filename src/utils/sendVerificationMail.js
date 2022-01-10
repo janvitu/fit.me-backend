@@ -1,7 +1,4 @@
-import initMailer from "./nodemailerConnection";
-
-export default function sendVerifyEmail(email, token) {
-  const mailer = initMailer();
+export default function sendVerifyEmail(mailer, email, token) {
   const data = {
     from: process.env.G_USER,
     to: email,
@@ -10,6 +7,6 @@ export default function sendVerifyEmail(email, token) {
   };
 
   mailer.sendMail(data).catch((err) => {
-    console.log(err);
+    console.error(err);
   });
 }

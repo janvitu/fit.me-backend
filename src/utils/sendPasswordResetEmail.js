@@ -1,7 +1,6 @@
 import initMailer from "./nodemailerConnection";
 
-export function sendPasswordResetEmail(email, lostPasswordHash) {
-  const mailer = initMailer();
+export function sendPasswordResetEmail(mailer, email, lostPasswordHash) {
   const data = {
     from: process.env.G_USER,
     to: email,
@@ -10,6 +9,6 @@ export function sendPasswordResetEmail(email, lostPasswordHash) {
   };
 
   mailer.sendMail(data).catch((err) => {
-    console.log(err);
+    console.error(err);
   });
 }
