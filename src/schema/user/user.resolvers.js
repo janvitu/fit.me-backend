@@ -1,9 +1,7 @@
 import argon2 from "argon2";
 import { getUserByEmail } from "../user/user.models";
-import jwt from "jsonwebtoken";
 import { createToken, verifyToken } from "../../utils/token";
 import { sendPasswordResetEmail } from "../../utils/sendPasswordResetEmail";
-import initMailer from "../../utils/nodemailerConnection";
 import { getCoach } from "../coach/coach.models";
 import { getSportsground } from "../sportsground/sportsground.models";
 import { getSportsman } from "../sportsman/sportsman.models";
@@ -71,7 +69,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    forgotenPassword: async (_, args, { db }) => {
+    forgotenPassword: async (_, args, { db, mailer }) => {
       const { email } = args;
       const user = await getUserByEmail(email, db);
       if (!user) {
@@ -86,7 +84,7 @@ const resolvers = {
           throw new Error(err);
         });
 
-      sendPasswordResetEmail(email, lostPasswordHash);
+      sendPasswordResetEmail(mailer, email, lostPasswordHash);
 
       return true;
     },

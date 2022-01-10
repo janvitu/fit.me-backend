@@ -8,7 +8,7 @@ import { createUsername } from "../../utils/stringNormalization";
 import { supabase } from "../../utils/supabaseClient";
 import { createToken } from "../../utils/token";
 
-async function createSportsman(_, args, { db }) {
+async function createSportsman(_, args, { db, mailer }) {
   const { email, password, name, surname } = args;
   const accref = "sportsman_id";
 
@@ -30,7 +30,7 @@ async function createSportsman(_, args, { db }) {
   if (!user) {
     await User.createUser({ email, password }, { db });
     user = await User.getUserByEmail(email, db);
-    sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
+    sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
 
     const supabaseAvatarImg = await supabase.storage
       .from(SUPABASE_IMG_STORAGE_OBJECT)

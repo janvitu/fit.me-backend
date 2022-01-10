@@ -2,7 +2,7 @@ import User from "../user/user.models";
 import { createUsername } from "../../utils/stringNormalization";
 import jwt from "jsonwebtoken";
 
-async function createCoach(_, args, { db }) {
+async function createCoach(_, args, { db, mailer }) {
   const { name, surname, vat_number, email, password } = args;
   const accref = "coach_id";
 
@@ -24,7 +24,7 @@ async function createCoach(_, args, { db }) {
   if (!user) {
     await User.createUser({ email, password }, { db });
     user = await User.getUserByEmail(email, db);
-    sendVerifyEmail(email, createToken({ id: user.id, email: user.email }));
+    sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 
   await User.updateAccRef({ user, ref: coach, accref }, { db });
@@ -67,7 +67,7 @@ async function updateCoach(_, args, { db }) {
       decoded.coach,
     ],
   ).catch((err) => {
-    console.log(err);
+    console.error(err);
   });
 
   return true;

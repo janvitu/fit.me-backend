@@ -4,13 +4,11 @@ import cors from "cors";
 import mariadb from "mariadb";
 import { supabase } from "./utils/supabaseClient";
 
-import { createAvatar } from "@dicebear/avatars";
-import * as style from "@dicebear/pixel-art-neutral";
-
 import cookieParser from "cookie-parser";
 import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 
+import nodemailer from "nodemailer";
 import { typeDefs, rootResolver } from "./schema";
 import verifyEmail from "./middleware/verifyEmail.middleware";
 
@@ -33,11 +31,20 @@ const main = async () => {
       throw new Error(err);
     });
 
+  const mailer = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+      user: process.env.G_USER,
+      pass: process.env.G_PASS,
+    },
+  });
+
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers: rootResolver,
     formatError: (error) => {
-      console.log(error);
+      console.error(error);
       return error;
     },
     context: async ({ req, res }) => {
@@ -47,6 +54,7 @@ const main = async () => {
         req,
         res,
         db,
+        mailer,
         supabase,
         auth,
       };
