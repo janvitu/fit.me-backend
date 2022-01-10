@@ -39,6 +39,10 @@ const tempTypeDef = gql`
     sportsman_id: Int!
     sportsman: Sportsman
   }
+  type BusinessDetail {
+    title: String
+    value: String
+  }
   type Sportsground {
     id: ID!
     name: String!
@@ -50,6 +54,7 @@ const tempTypeDef = gql`
     rating: String
     reviews: [Review]
     events: [Event]
+    details: [BusinessDetail]
   }
   type Coach {
     id: ID!
@@ -65,6 +70,7 @@ const tempTypeDef = gql`
     description: String
     cover_photo_id: ID
     profile_photo_id: ID
+    details: [BusinessDetail]
   }
   type Sportsman {
     id: ID!
