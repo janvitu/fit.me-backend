@@ -8,11 +8,11 @@ const tempTypeDef = gql`
   type Address {
     id: ID
     street: String
-    number: Int
+    no: Int
     city: String
     region: String
     state: String
-    zip: String
+    zip_code: Int
   }
   type Tag {
     name: String
@@ -62,7 +62,7 @@ const tempTypeDef = gql`
     name: String!
     surname: String!
     published: Boolean!
-    vat_number: String!
+    vat_number: String
     phone: String
     address: Address
     specializations: [String]
@@ -70,6 +70,8 @@ const tempTypeDef = gql`
     description: String
     cover_photo_id: ID
     profile_photo_id: ID
+    rating: String
+    reviews: [Review]
     details: [BusinessDetail]
   }
   type Sportsman {
