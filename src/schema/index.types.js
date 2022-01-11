@@ -2,6 +2,7 @@ import { typeDefs as CoachTypeDefs } from "./coach";
 import { typeDefs as UserTypeDefs } from "./user";
 import { typeDefs as SportsgroundTypeDefs } from "./sportsground";
 import { typeDefs as SportsmanTypeDefs } from "./sportsman";
+import { typeDefs as EventTypeDefs } from "./event";
 import { gql } from "apollo-server-core";
 
 const tempTypeDef = gql`
@@ -104,6 +105,7 @@ const typeDefs = [
   CoachTypeDefs,
   SportsgroundTypeDefs,
   SportsmanTypeDefs,
+  EventTypeDefs,
 ];
 
 export default typeDefs;
