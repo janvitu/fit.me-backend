@@ -16,8 +16,15 @@ export const getCoaches = async (db) => {
   return coaches;
 };
 
+export async function getCoachReviews(id, db) {
+  const reviews = await db.query("SELECT * FROM review WHERE coach_id = ?", [id]);
+
+  return reviews;
+}
+
 export default {
   get: getCoach,
   getByUsername: getCoachByUsername,
   getAll: getCoaches,
+  getReviews: getCoachReviews,
 };

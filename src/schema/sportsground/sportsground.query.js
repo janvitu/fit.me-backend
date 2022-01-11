@@ -56,12 +56,13 @@ async function getSportsgrounds(_, args, { db }) {
       const address = await getAddress(sportsground.address_id, db);
       const reviews = await Sportsground.getReviews(sportsground.id, db);
       const tags = await Sportsground.getTags(sportsground.id, db);
+      const rating = reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length || 0;
 
       return {
         ...sportsground,
         tags,
         address,
-        rating: reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length || null,
+        rating,
       };
     }
   });
