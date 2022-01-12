@@ -672,6 +672,7 @@ INSERT INTO `accepted_payment` (`id`, `name`, `description`) VALUES
 -- Vypisuji data pro tabulku `photo`
 --
 INSERT INTO `photo` (`id`, `name`, `location`) VALUES
+-- coaches
 (1, "avatar", "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/adamovajirina/avatar.svg"),
 (2, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/coufalovapetra/avatar.svg"),
 (3, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/dohnalovabarbora/avatar.svg"),
@@ -686,7 +687,14 @@ INSERT INTO `photo` (`id`, `name`, `location`) VALUES
 (12, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/polakmichal/avatar.svg"),
 (13, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/sekyrovamichaela/avatar.svg"),
 (14, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/stankovamarie/avatar.svg"),
-(15, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/starkovaleona/avatar.svg");
+(15, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/coach/starkovaleona/avatar.svg"),
+-- sportsgrounds
+(16, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/gymcube/avatar.svg"),
+(17, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/infinityfitness/avatar.svg"),
+(18, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/jbisportfitstudio/avatar.svg"),
+(19, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/relaxme/avatar.svg"),
+(20, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/sportzone/avatar.svg"),
+(21, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/tvujgym/avatar.svg");
 
 
 --
@@ -794,12 +802,12 @@ INSERT INTO `sportsman` (`id`, `username`, `name`, `surname`, `phone`, `profile_
 --
 
 INSERT INTO `sports_ground` (`id`, `username`, `name`, `published`, `opening_hours_from`, `opening_hours_to`, `web`, `phone`, `vat_number`, `intro_text`, `description`, `address_id`, `cover_photo_id`, `profile_photo_id`) VALUES
-(1, 'sportzone', 'Sport Zone', 0, '09:00:00', '15:00:00', 'http://www.sport-zone.cz', '728 674 593', '27596001', 'Lorem ipsum dolor sit amet...', 'Provozujeme kurty na squash a bedminton s plně vybaveným sportovním zázemím a možností zapůjčení vybavení.', 1, NULL, NULL),
-(2, 'relaxme', 'RelaxMe', 1, '13:00:00', '17:00:00', 'http://relaxme.cz', '728 124 754', '07918101', 'Lorem ipsum dolor sit amet...', 'Wellness centrum Relaxme v Kolíně nabízí nejrůznější masáže (klasické, těhotenské i thajské od rodilé Thajky), různé druhy jógy, cvičení a masáže.', 2, NULL, NULL),
-(3, 'gymcube', 'Gym Cube', 1, '05:00:00', '21:00:00', 'http://gymcube.cz/', '607 618 666', NULL, 'Lorem ipsum dolor sit amet...', 'Nové moderní (nejen) fitness.', 3, NULL, NULL),
-(4, 'jbisportfitstudio', 'JBI Sport Fit Studio', 1, '12:00:00', '18:00:00', 'http://www.jbi-fitness.cz', '321 721 319', NULL, 'Lorem ipsum dolor sit amet...', 'Skvělého pocitu z dobré kondice můžete dosáhnout v každém věku. Fitness je životní styl, který napomáhá lidem udržet si zdraví a účinně se chránit před stresem a civilizačními chorobami. Pravidelným cvičením můžete nabrat svalovou hmotu nebo se zbavit přebytečných kil.', 4, NULL, NULL),
-(5, 'tvujgym', 'Tvůj Gym', 1, '05:00:00', '23:00:00', 'https://www.tvujgym.cz/', '723 032 597', '06125744', 'Lorem ipsum dolor sit amet...', 'Tvůj Gym (TG) je rájem pro všechny ty, kterým jde při cvičení o maximální kvalitu tréninku bez jakýchkoliv kompromisů, spojenou s velkou mírou soukromí.', 5, NULL, NULL),
-(6, 'infinityfitness', 'Infinity fitness', 1, '09:00:00', '20:00:00', 'http://www.infinityfitness.cz', '564123784', NULL, 'Lorem ipsum dolor sit amet...', 'V našem fitku můžete navštívit lekce jako je například fitbox, TRX, kruhový trénink, box, street dance nebo bodystyling.', 6, NULL, NULL);
+(1, 'sportzone', 'Sport Zone', 0, '09:00:00', '15:00:00', 'http://www.sport-zone.cz', '728 674 593', '27596001', 'Lorem ipsum dolor sit amet...', 'Provozujeme kurty na squash a bedminton s plně vybaveným sportovním zázemím a možností zapůjčení vybavení.', 1, NULL, 20),
+(2, 'relaxme', 'RelaxMe', 1, '13:00:00', '17:00:00', 'http://relaxme.cz', '728 124 754', '07918101', 'Lorem ipsum dolor sit amet...', 'Wellness centrum Relaxme v Kolíně nabízí nejrůznější masáže (klasické, těhotenské i thajské od rodilé Thajky), různé druhy jógy, cvičení a masáže.', 2, NULL, 19),
+(3, 'gymcube', 'Gym Cube', 1, '05:00:00', '21:00:00', 'http://gymcube.cz/', '607 618 666', NULL, 'Lorem ipsum dolor sit amet...', 'Nové moderní (nejen) fitness.', 3, NULL, 16),
+(4, 'jbisportfitstudio', 'JBI Sport Fit Studio', 1, '12:00:00', '18:00:00', 'http://www.jbi-fitness.cz', '321 721 319', NULL, 'Lorem ipsum dolor sit amet...', 'Skvělého pocitu z dobré kondice můžete dosáhnout v každém věku. Fitness je životní styl, který napomáhá lidem udržet si zdraví a účinně se chránit před stresem a civilizačními chorobami. Pravidelným cvičením můžete nabrat svalovou hmotu nebo se zbavit přebytečných kil.', 4, NULL, 18),
+(5, 'tvujgym', 'Tvůj Gym', 1, '05:00:00', '23:00:00', 'https://www.tvujgym.cz/', '723 032 597', '06125744', 'Lorem ipsum dolor sit amet...', 'Tvůj Gym (TG) je rájem pro všechny ty, kterým jde při cvičení o maximální kvalitu tréninku bez jakýchkoliv kompromisů, spojenou s velkou mírou soukromí.', 5, NULL, 21),
+(6, 'infinityfitness', 'Infinity fitness', 1, '09:00:00', '20:00:00', 'http://www.infinityfitness.cz', '564123784', NULL, 'Lorem ipsum dolor sit amet...', 'V našem fitku můžete navštívit lekce jako je například fitbox, TRX, kruhový trénink, box, street dance nebo bodystyling.', 6, NULL, 17);
 
 
 --
