@@ -14,9 +14,9 @@ export const createUser = async (args, { db }) => {
   return true;
 };
 
-export const updateAccRef = async (args, { db }) => {
-  const { user, ref, accref } = args;
-  await db.query(`UPDATE user SET ${accref} = ? WHERE id = ?`, [ref.id, user.id]);
+export const updateAccountReference = async (args, { db }) => {
+  const { user, ref, accountReference } = args;
+  await db.query(`UPDATE user SET ${accountReference} = ? WHERE id = ?`, [ref.id, user.id]);
 
   return true;
 };
@@ -37,6 +37,6 @@ export const verifyUserEmail = async (args, { db }) => {
 export default {
   getUserByEmail,
   createUser,
-  updateAccRef,
+  updateAccountReference,
   verifyUserEmail,
 };

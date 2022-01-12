@@ -8,10 +8,10 @@ import jwt from "jsonwebtoken";
 
 async function createSportsground(_, args, { db, mailer }) {
   const { name, street, city, zip, country, email, password, vat_number } = args;
-  const accref = "sports_ground_id";
+  const accountReference = "sports_ground_id";
   let user = User.getUserByEmail(email, db);
 
-  if (user && user[accref]) {
+  if (user && user[accountReference]) {
     throw new Error("User already exists");
   }
 
@@ -29,7 +29,7 @@ async function createSportsground(_, args, { db, mailer }) {
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 
-  await User.updateAccRef({ user, ref: sportsground, accref }, { db });
+  await User.updateAccountReference({ user, ref: sportsground, accountReference }, { db });
 
   return true;
 }

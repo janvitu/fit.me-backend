@@ -4,11 +4,11 @@ import jwt from "jsonwebtoken";
 
 async function createCoach(_, args, { db, mailer }) {
   const { name, surname, vat_number, email, password } = args;
-  const accref = "coach_id";
+  const accountReference = "coach_id";
 
   let user = await User.getUserByEmail(email, db);
 
-  if (user && user[accref]) {
+  if (user && user[accountReference]) {
     throw new Error("Email already exists");
   }
 
@@ -27,7 +27,7 @@ async function createCoach(_, args, { db, mailer }) {
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 
-  await User.updateAccRef({ user, ref: coach, accref }, { db });
+  await User.updateAccountReference({ user, ref: coach, accountReference }, { db });
 
   return true;
 }

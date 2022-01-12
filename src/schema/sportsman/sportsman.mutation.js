@@ -10,11 +10,11 @@ import { createToken } from "../../utils/token";
 
 async function createSportsman(_, args, { db, mailer }) {
   const { email, password, name, surname } = args;
-  const accref = "sportsman_id";
+  const accountReference = "sportsman_id";
 
   let user = await User.getUserByEmail(email, db);
 
-  if (user && user[accref]) {
+  if (user && user[accountReference]) {
     throw new Error("User already exists");
   }
 
@@ -39,7 +39,7 @@ async function createSportsman(_, args, { db, mailer }) {
       });
   }
 
-  await User.updateAccRef({ user, ref: sportsman, accref }, { db });
+  await User.updateAccountReference({ user, ref: sportsman, accountReference }, { db });
 
   return true;
 }
