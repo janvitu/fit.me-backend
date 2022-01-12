@@ -15,10 +15,8 @@ async function getSportsground(_, args, { db }) {
       sportsman,
     };
   });
-  console.log(reviewsWithSportsman);
   const tags = await Sportsground.getTags(sportsground.id, db);
   const rating = reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length;
-  console.log(sportsground);
   const details = [
     {
       title: "Sporty",

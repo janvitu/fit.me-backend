@@ -28,7 +28,6 @@ async function getCoaches(_, args, { db }) {
   const coachesFull = coaches.map(async (coach) => {
     if (coach.published) {
       const reviews = await Coach.getReviews(coach.id, db);
-      console.log(reviews);
       const rating = reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length || 0;
 
       return {
