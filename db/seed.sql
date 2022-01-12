@@ -694,7 +694,18 @@ INSERT INTO `photo` (`id`, `name`, `location`) VALUES
 (18, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/jbisportfitstudio/avatar.svg"),
 (19, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/relaxme/avatar.svg"),
 (20, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/sportzone/avatar.svg"),
-(21, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/tvujgym/avatar.svg");
+(21, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsground/tvujgym/avatar.svg"),
+-- sportsmans
+(22, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/ferkovaanna/avatar.svg"),
+(23, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/gunarovamarie/avatar.svg"),
+(24, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/kohoutkovajitka/avatar.svg"),
+(25, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/krejcidavid/avatar.svg"),
+(26, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/kusaadela/avatar.svg"),
+(27, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/ledvinamichal/avatar.svg"),
+(28, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/majjakub/avatar.svg"),
+(29, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/rosovamarketa/avatar.svg"),
+(30, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/slegrrene/avatar.svg"),
+(31, "avatar" , "https://paxjrxehftbgfclkcnoi.supabase.in/storage/v1/object/public/fitme-imgs/sportsman/vlachmichal/avatar.svg");
 
 
 --
@@ -786,16 +797,16 @@ INSERT INTO `sport` (`id`, `name`, `color`) VALUES
 --
 
 INSERT INTO `sportsman` (`id`, `username`, `name`, `surname`, `phone`, `profile_photo_id`) VALUES
-(1, 'gunarovamarie', 'Marie', 'Gunárová', '123456789', NULL),
-(2, 'ledvinamichal', 'Michal', 'Ledvina', '879871234', NULL),
-(3, 'kusaadela', 'Adéla', 'Kusá', NULL, NULL),
-(4, 'majjakub', 'Jakub', 'Máj', '785231575', NULL),
-(5, 'rosovamarketa', 'Markéta', 'Rosová', '564856428', NULL),
-(6, 'ferkovaanna', 'Anna', 'Ferková', '485298456', NULL),
-(7, 'slegrrene', 'René', 'Šlégr', NULL, NULL),
-(8, 'kohoutkovajitka', 'Jitka', 'Kohoutková', '544567538', NULL),
-(9, 'vlachmichal', 'Michal', 'Vlach', '654852159', NULL),
-(10, 'krejcidavid', 'David', 'Krejčí', NULL, NULL);
+(1, 'gunarovamarie', 'Marie', 'Gunárová', '123456789', 23),
+(2, 'ledvinamichal', 'Michal', 'Ledvina', '879871234', 27),
+(3, 'kusaadela', 'Adéla', 'Kusá', NULL, 26),
+(4, 'majjakub', 'Jakub', 'Máj', '785231575', 28),
+(5, 'rosovamarketa', 'Markéta', 'Rosová', '564856428', 29),
+(6, 'ferkovaanna', 'Anna', 'Ferková', '485298456', 22),
+(7, 'slegrrene', 'René', 'Šlégr', NULL, 30),
+(8, 'kohoutkovajitka', 'Jitka', 'Kohoutková', '544567538', 24),
+(9, 'vlachmichal', 'Michal', 'Vlach', '654852159', 31),
+(10, 'krejcidavid', 'David', 'Krejčí', NULL, 25);
 
 --
 -- Vypisuji data pro tabulku `sports_ground`
