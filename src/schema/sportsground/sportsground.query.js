@@ -1,6 +1,7 @@
 import Sportsground from "./sportsground.models";
 import { getAddress } from "../index.models";
 import Sportsman from "../sportsman/sportsman.models";
+import { getPhoto } from "../index.models";
 
 async function getSportsground(_, args, { db }) {
   const { username } = args;
@@ -16,6 +17,7 @@ async function getSportsground(_, args, { db }) {
     };
   });
   const tags = await Sportsground.getTags(sportsground.id, db);
+  const profile_photo = await getPhoto(sportsground.profile_photo_id, db);
   const rating =
     Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
       10 || 0;
@@ -45,6 +47,7 @@ async function getSportsground(_, args, { db }) {
     reviews: [...reviewsWithSportsman],
     rating,
     details,
+    profile_photo,
   };
 }
 
@@ -56,6 +59,7 @@ async function getSportsgrounds(_, args, { db }) {
       const address = await getAddress(sportsground.address_id, db);
       const reviews = await Sportsground.getReviews(sportsground.id, db);
       const tags = await Sportsground.getTags(sportsground.id, db);
+      const profile_photo = await getPhoto(sportsground.profile_photo_id, db);
       const rating =
         Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
           10 || 0;
@@ -65,6 +69,7 @@ async function getSportsgrounds(_, args, { db }) {
         tags,
         address,
         rating,
+        profile_photo,
       };
     }
   });
