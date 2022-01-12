@@ -15,7 +15,9 @@ async function getCoach(_, args, { db }) {
       sportsman,
     };
   });
-  const rating = reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length;
+  const rating =
+    Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
+      10 || 0;
 
   return {
     ...coach,
@@ -31,7 +33,10 @@ async function getCoaches(_, args, { db }) {
   const coachesFull = coaches.map(async (coach) => {
     if (coach.published) {
       const reviews = await Coach.getReviews(coach.id, db);
-      const rating = reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length || 0;
+      const rating =
+        Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
+          10 || 0;
+
       const profile_photo = await getPhoto(coach.profile_photo_id, db);
 
       return {

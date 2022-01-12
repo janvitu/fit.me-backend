@@ -16,7 +16,9 @@ async function getSportsground(_, args, { db }) {
     };
   });
   const tags = await Sportsground.getTags(sportsground.id, db);
-  const rating = reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length;
+  const rating =
+    Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
+      10 || 0;
   const details = [
     {
       title: "Sporty",
@@ -54,7 +56,9 @@ async function getSportsgrounds(_, args, { db }) {
       const address = await getAddress(sportsground.address_id, db);
       const reviews = await Sportsground.getReviews(sportsground.id, db);
       const tags = await Sportsground.getTags(sportsground.id, db);
-      const rating = reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length || 0;
+      const rating =
+        Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
+          10 || 0;
 
       return {
         ...sportsground,
