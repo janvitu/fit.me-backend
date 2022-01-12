@@ -181,8 +181,6 @@ CREATE TABLE `photo` (
                          `id` int(11) NOT NULL,
                          `name` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
                          `location` text COLLATE utf8_czech_ci NOT NULL,
-                         `coach_id` int(11) DEFAULT NULL,
-                         `sports_ground_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
@@ -402,8 +400,6 @@ ALTER TABLE `message`
 --
 ALTER TABLE `photo`
     ADD PRIMARY KEY (`id`),
-  ADD KEY `fkIdx_264` (`coach_id`),
-  ADD KEY `fkIdx_310` (`sports_ground_id`);
 
 --
 -- Indexy pro tabulku `review`
@@ -644,13 +640,6 @@ ALTER TABLE `message`
     ADD CONSTRAINT `FK_217` FOREIGN KEY (`sportsman_id`) REFERENCES `sportsman` (`id`),
   ADD CONSTRAINT `FK_220` FOREIGN KEY (`sports_ground_id`) REFERENCES `sports_ground` (`id`),
   ADD CONSTRAINT `FK_223` FOREIGN KEY (`coach_id`) REFERENCES `coach` (`id`);
-
---
--- Omezení pro tabulku `photo`
---
-ALTER TABLE `photo`
-    ADD CONSTRAINT `FK_262` FOREIGN KEY (`coach_id`) REFERENCES `coach` (`id`),
-  ADD CONSTRAINT `FK_308` FOREIGN KEY (`sports_ground_id`) REFERENCES `sports_ground` (`id`);
 
 --
 -- Omezení pro tabulku `review`
