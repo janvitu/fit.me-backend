@@ -19,6 +19,11 @@ const tempTypeDef = gql`
     name: String
     color: String
   }
+  type Photo {
+    id: ID
+    name: String
+    location: String
+  }
   type Event {
     id: ID!
     name: String!
@@ -51,11 +56,13 @@ const tempTypeDef = gql`
     address_id: ID!
     address: Address!
     description: String
+    intro_text: String
     tags: [Tag]
     rating: String
     reviews: [Review]
     events: [Event]
     details: [BusinessDetail]
+    profile_photo: Photo
   }
   type Coach {
     id: ID!
@@ -67,6 +74,7 @@ const tempTypeDef = gql`
     phone: String
     address: Address
     specializations: [String]
+    intro_text: String
     reqirements: [String]
     description: String
     cover_photo_id: ID
@@ -74,6 +82,7 @@ const tempTypeDef = gql`
     rating: String
     reviews: [Review]
     details: [BusinessDetail]
+    profile_photo: Photo
   }
   type Sportsman {
     id: ID!
