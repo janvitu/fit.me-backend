@@ -180,7 +180,7 @@ CREATE TABLE `message` (
 CREATE TABLE `photo` (
                          `id` int(11) NOT NULL,
                          `name` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
-                         `location` text COLLATE utf8_czech_ci NOT NULL,
+                         `location` text COLLATE utf8_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- --------------------------------------------------------
