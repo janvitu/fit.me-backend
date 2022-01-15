@@ -1,6 +1,9 @@
 import { gql } from "apollo-server-core";
 
 const typeDefs = gql`
+  type Query {
+    getSportsman(id: ID!): Sportsman
+  }
   type Mutation {
     createSportsman(name: String!, surname: String!, email: String!, password: String!): Boolean!
     updateSportsman(
@@ -15,6 +18,15 @@ const typeDefs = gql`
       state: String
       zip: String
     ): Boolean!
+  }
+  type Sportsman {
+    id: ID!
+    username: String!
+    name: String!
+    surname: String!
+    phone: String
+    address: Address
+    profile_photo: Photo
   }
 `;
 

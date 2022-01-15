@@ -24,88 +24,17 @@ const tempTypeDef = gql`
     name: String
     location: String
   }
-  type Event {
-    id: ID!
-    name: String!
-    description: String!
-    datetime_from: String!
-    datetime_to: String
-    datetime_created: String!
-    sportsground: Sportsground
-    tags: [Tag]
-    exercises: [Exercise]
-    sportsmans: [Sportsman]
-    difficulty: String
-    numOfRegistered: Int
-  }
-  type Exercise {
-    id: ID!
-    name: String!
-    icon: String
-  }
   type Review {
     id: ID!
     stars: Int!
     comment: String!
-    datetime: String!
+    datetime: Float!
     sportsman_id: Int!
     sportsman: Sportsman
   }
   type BusinessDetail {
     title: String
     value: String
-  }
-  type Sportsground {
-    id: ID!
-    name: String!
-    username: String!
-    address_id: ID!
-    address: Address
-    description: String
-    intro_text: String
-    tags: [Tag]
-    rating: String
-    reviews: [Review]
-    events: [Event]
-    details: [BusinessDetail]
-    profile_photo: Photo
-  }
-  type Coach {
-    id: ID!
-    username: String!
-    name: String!
-    surname: String!
-    published: Boolean!
-    vat_number: String
-    phone: String
-    address: Address
-    specializations: [String]
-    intro_text: String
-    reqirements: [String]
-    description: String
-    cover_photo_id: ID
-    profile_photo_id: ID
-    rating: String
-    reviews: [Review]
-    details: [BusinessDetail]
-    profile_photo: Photo
-  }
-  type Sportsman {
-    id: ID!
-    username: String!
-    name: String!
-    surname: String!
-    phone: String
-    address: Address
-    profile_photo: Photo
-  }
-  type User {
-    id: ID!
-    email: String!
-    verified: Boolean!
-    sportsground: Sportsground
-    coach: Coach
-    sportsman: Sportsman
   }
   type Query {
     _: Boolean

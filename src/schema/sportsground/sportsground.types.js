@@ -34,6 +34,21 @@ const typeDefs = gql`
       zip: String
     ): Boolean
   }
+  type Sportsground {
+    id: ID!
+    name: String!
+    username: String!
+    address_id: ID!
+    address: Address
+    description: String
+    intro_text: String
+    tags: [Tag]
+    rating: String
+    reviews: [Review]
+    events: [Event]
+    details: [BusinessDetail]
+    profile_photo: Photo
+  }
 `;
 
 export default typeDefs;
