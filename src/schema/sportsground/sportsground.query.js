@@ -38,6 +38,14 @@ async function getSportsground(_, args, { db }) {
       title: "Telefon",
       value: sportsground.phone,
     },
+    {
+      title: "Otevírací doba",
+      value: `${sportsground.opening_hours_from
+        .substring(0, 5)
+        .replace(/^0+/, "")} až ${sportsground.opening_hours_to
+        .substring(0, 5)
+        .replace(/^0+/, "")}`,
+    },
   ];
 
   return {

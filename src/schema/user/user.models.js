@@ -1,9 +1,15 @@
 import * as argon2 from "argon2";
+import { getCoach } from "../coach/coach.models";
+import { getSportsground } from "../sportsground/sportsground.models";
+import { getSportsman } from "../sportsman/sportsman.models";
 
 export const getUserByEmail = async (email, db) => {
-  const user = await db.query(`SELECT * FROM user WHERE email = ?`, [email]);
+  const user = (await db.query("SELECT * FROM user WHERE email = ?", [email]))[0];
+  const sportsman = await getSportsman(user.sportsman_id, db);
+  const coach = await getCoach(user.coach_id, db);
+  const sportsground = await getSportsground(user.sports_ground_id, db);
 
-  return user[0];
+  return { ...user, sportsman, coach, sportsground };
 };
 
 export const createUser = async (args, { db }) => {
@@ -35,8 +41,8 @@ export const verifyUserEmail = async (args, { db }) => {
 };
 
 export default {
-  getUserByEmail,
-  createUser,
+  getByEmail: getUserByEmail,
+  create: createUser,
   updateAccountReference,
   verifyUserEmail,
 };
