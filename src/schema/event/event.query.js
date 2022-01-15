@@ -8,6 +8,7 @@ async function getEvent(_, args, { db }) {
   const tags = await Event.getTags(id, db);
   const exercises = await Event.getExercises(id, db);
   const sportsmans = await Event.getSportsmans(id, db);
+  const numOfRegistered = await sportsmans.length;
   const difficulty = await Event.getDifficulty(event.difficulty_id, db);
   const sportsground = await Sportsground.get(event.sports_ground_id, db);
   return {
@@ -17,6 +18,7 @@ async function getEvent(_, args, { db }) {
     sportsmans,
     difficulty,
     sportsground,
+    numOfRegistered,
   };
 }
 
@@ -27,16 +29,18 @@ async function getEvents(_, args, { db }) {
     if (event.sports_ground_id) {
       const exercises = await Event.getExercises(event.id, db);
       const sportsmans = await Event.getSportsmans(event.id, db);
+      const numOfRegistered = await sportsmans.length;
       const tags = await Event.getTags(event.id, db);
       const difficulty = await Event.getDifficulty(event.difficulty_id, db);
-      // const sportsground = await Sportsground.get(event.sports_ground_id, db);
+      const sportsground = await Sportsground.get(event.sports_ground_id, db);
       return {
         ...event,
         sportsmans,
         tags,
         exercises,
         difficulty,
-        // sportsground,
+        sportsground,
+        numOfRegistered,
       };
     }
   });

@@ -36,6 +36,7 @@ const tempTypeDef = gql`
     exercises: [Exercise]
     sportsmans: [Sportsman]
     difficulty: String
+    numOfRegistered: Int
   }
   type Exercise {
     id: ID!

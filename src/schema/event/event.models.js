@@ -40,11 +40,11 @@ export async function getEventSportsmans(event_id, db) {
     "SELECT username, name, surname, profile_photo_id FROM sportsman LEFT JOIN event_sportsman ON sportsman.id=event_sportsman.sportsman_id WHERE event_sportsman.event_id = ?",
     [event_id],
   );
-  const sportsmansFull = sportsmans.map((sportsman) => {
-    // const profile_photo = await getPhoto(sportsman.profile_photo_id, db);
+  const sportsmansFull = sportsmans.map(async (sportsman) => {
+    const profile_photo = await getPhoto(sportsman.profile_photo_id, db);
     return {
       ...sportsman,
-      // profile_photo,
+      profile_photo,
     };
   });
   return sportsmansFull;
