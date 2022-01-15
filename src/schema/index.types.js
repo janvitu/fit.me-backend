@@ -31,11 +31,17 @@ const tempTypeDef = gql`
     datetime_from: String!
     datetime_to: String
     datetime_created: String!
-    cover_photo_id: Int
-    sports_ground_id: Int!
-    coach_id: Int
-    sportground: Sportsground
-    coach: Coach
+    sportsground: Sportsground
+    tags: [Tag]
+    exercises: [Exercise]
+    sportsmans: [Sportsman]
+    difficulty: String
+    numOfRegistered: Int
+  }
+  type Exercise {
+    id: ID!
+    name: String!
+    icon: String
   }
   type Review {
     id: ID!
@@ -54,7 +60,7 @@ const tempTypeDef = gql`
     name: String!
     username: String!
     address_id: ID!
-    address: Address!
+    address: Address
     description: String
     intro_text: String
     tags: [Tag]
@@ -91,6 +97,7 @@ const tempTypeDef = gql`
     surname: String!
     phone: String
     address: Address
+    profile_photo: Photo
   }
   type User {
     id: ID!
