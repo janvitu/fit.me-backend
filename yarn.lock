@@ -1057,10 +1057,10 @@
   dependencies:
     "cross-fetch" "^3.0.6"
 
-"@supabase/realtime-js@^1.3.3":
-  "integrity" "sha512-9D79jlo/56VQf/U7TWhu24epCoj0vWJ7ALkGcqci8Luk/iOcdCxY1NJ76BbS1UnpXEIvQxQGb1R5NSexriKcUA=="
-  "resolved" "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-1.3.3.tgz"
-  "version" "1.3.3"
+"@supabase/realtime-js@^1.3.4":
+  "integrity" "sha512-N9xerTleMp6OKgsqYp0WujYJvKplMxhSJ9agTvAL6vc/+4hh5uxak4wLpgqigy3ZBzpRUSYty7hDyS017+waiw=="
+  "resolved" "https://registry.npmjs.org/@supabase/realtime-js/-/realtime-js-1.3.4.tgz"
+  "version" "1.3.4"
   dependencies:
     "@types/websocket" "^1.0.3"
     "websocket" "^1.0.34"
@@ -1072,14 +1072,14 @@
   dependencies:
     "cross-fetch" "^3.1.0"
 
-"@supabase/supabase-js@^1.28.5":
-  "integrity" "sha512-RZFSkj0tC6YppUVOBDldLLko4BgV8ASY+OiXC1ZxpcwmNInPgGiDkv59kVPN1UC96vnRQ/1fbFngPcwTtb1Qjw=="
-  "resolved" "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-1.28.5.tgz"
-  "version" "1.28.5"
+"@supabase/supabase-js@^1.29.1":
+  "integrity" "sha512-5UPgB93XCzALTpbuwvEGH+Y7i3YBY3y3y96uNnzAWYerGWlqx2kIVmV++GAiEPp/tp+QRsv103AoLKiP3dP2DA=="
+  "resolved" "https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-1.29.1.tgz"
+  "version" "1.29.1"
   dependencies:
     "@supabase/gotrue-js" "^1.21.7"
     "@supabase/postgrest-js" "^0.35.0"
-    "@supabase/realtime-js" "^1.3.3"
+    "@supabase/realtime-js" "^1.3.4"
     "@supabase/storage-js" "^1.5.0"
 
 "@szmarczak/http-timer@^1.1.2":
@@ -1996,9 +1996,9 @@
     "isarray" "^1.0.0"
 
 "bufferutil@^4.0.1":
-  "integrity" "sha512-HTm14iMQKK2FjFLRTM5lAVcyaUzOnqbPtesFIvREgXpJHdQm8bWS+GkQgIkfaBYRHuCnea7w8UVNfwiAQhlr9A=="
-  "resolved" "https://registry.npmjs.org/bufferutil/-/bufferutil-4.0.5.tgz"
-  "version" "4.0.5"
+  "integrity" "sha512-jduaYOYtnio4aIAyc6UbvPCVcgq7nYpVnucyxr6eCYg/Woad9Hf/oxxBRDnGGjPfjUm6j5O/uBWhIu4iLebFaw=="
+  "resolved" "https://registry.npmjs.org/bufferutil/-/bufferutil-4.0.6.tgz"
+  "version" "4.0.6"
   dependencies:
     "node-gyp-build" "^4.3.0"
 
@@ -6247,9 +6247,9 @@
   "version" "3.1.1"
 
 "utf-8-validate@^5.0.2":
-  "integrity" "sha512-vLt1O5Pp+flcArHGIyKEQq883nBt8nN8tVBcoL0qUXj2XT1n7p70yGIq2VK98I5FdZ1YHc0wk/koOnHjnXWk1Q=="
-  "resolved" "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-5.0.7.tgz"
-  "version" "5.0.7"
+  "integrity" "sha512-k4dW/Qja1BYDl2qD4tOMB9PFVha/UJtxTc1cXYOe3WwA/2m0Yn4qB7wLMpJyLJ/7DR0XnTut3HsCSzDT4ZvKgA=="
+  "resolved" "https://registry.npmjs.org/utf-8-validate/-/utf-8-validate-5.0.8.tgz"
+  "version" "5.0.8"
   dependencies:
     "node-gyp-build" "^4.3.0"
 
