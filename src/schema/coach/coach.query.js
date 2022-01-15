@@ -19,12 +19,22 @@ async function getCoach(_, args, { db }) {
   });
   const ratingsStars = reviews.map((review) => review.stars);
   const rating = roundNumber(averageRating(ratingsStars), 1) || 0;
-  console.log(rating);
+  const details = [
+    {
+      title: "Specializace",
+      value: coach.specialization,
+    },
+    {
+      title: "Telefon",
+      value: coach.phone,
+    },
+  ];
 
   return {
     ...coach,
     reviews: [...reviewsWithSportsman],
     rating,
+    details,
   };
 }
 
