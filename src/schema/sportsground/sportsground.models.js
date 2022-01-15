@@ -1,7 +1,7 @@
 import { getAddress, getPhoto } from "../index.models";
 
 export async function getSportsground(id, db) {
-  const sportsground = db.query("SELECT * FROM sports_ground WHERE id = ?", [id])[0];
+  const sportsground = (await db.query("SELECT * FROM sports_ground WHERE id = ?", [id]))[0];
   const address = await getAddress(sportsground.address_id, db);
   const profile_photo = await getPhoto(sportsground.profile_photo_id, db);
 
