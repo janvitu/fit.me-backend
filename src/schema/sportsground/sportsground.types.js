@@ -38,7 +38,7 @@ const typeDefs = gql`
     id: ID!
     name: String!
     username: String!
-    address_id: ID!
+    address_id: ID
     address: Address
     description: String
     intro_text: String
