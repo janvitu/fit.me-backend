@@ -1,14 +1,14 @@
-import { getAddress } from "../index.models";
+import { getAddress, getPhoto } from "../index.models";
 
 export async function getSportsground(id, db) {
   const sportsground = db.query("SELECT * FROM sports_ground WHERE id = ?", [id])[0];
-  const sportsgroundAddress = await getAddress(sportsground.address_id, db);
+  const address = await getAddress(sportsground.address_id, db);
+  const profile_photo = await getPhoto(sportsground.profile_photo_id, db);
 
   return {
     ...sportsground,
-    address: {
-      ...sportsgroundAddress,
-    },
+    address,
+    profile_photo,
   };
 }
 
@@ -16,14 +16,13 @@ export async function getSportsgroundByUsername(username, db) {
   const sportsground = (
     await db.query("SELECT * FROM sports_ground WHERE username = ?", [username])
   )[0];
-
-  const sportsgroundAddress = await getAddress(sportsground.address_id, db);
+  const address = await getAddress(sportsground.address_id, db);
+  const profile_photo = await getPhoto(sportsground.profile_photo_id, db);
 
   return {
     ...sportsground,
-    address: {
-      ...sportsgroundAddress,
-    },
+    address,
+    profile_photo,
   };
   return;
 }
