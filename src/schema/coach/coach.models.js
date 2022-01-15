@@ -1,13 +1,17 @@
+import { getPhoto } from "../index.models";
+
 export const getCoach = async (id, db) => {
   const coach = await db.query("SELECT * FROM coach WHERE id = ?", [id])[0];
+  const profile_photo = await getPhoto(coach.profile_photo_id, db);
 
-  return coach;
+  return { ...coach, profile_photo };
 };
 
 export const getCoachByUsername = async (username, db) => {
-  const coach = await db.query("SELECT * FROM coach WHERE username = ?", [username]);
+  const coach = (await db.query("SELECT * FROM coach WHERE username = ?", [username]))[0];
+  const profile_photo = await getPhoto(coach.profile_photo_id, db);
 
-  return coach[0];
+  return { ...coach, profile_photo };
 };
 
 export const getCoaches = async (db) => {
