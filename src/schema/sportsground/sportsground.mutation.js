@@ -84,7 +84,30 @@ async function updateSportsground(_, args, { db }) {
   return true;
 }
 
+async function addReviewSportsground(_, args, { db }) {
+  const { token, stars, comment, sportsground_id } = args;
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!token) {
+    throw new Error("No token provided");
+  }
+  if (!decoded) {
+    throw new Error("Invalid token");
+  }
+  await db
+    .query(
+      "INSERT INTO review (stars, comment,  sportsman_id, sports_ground_id) VALUES (?,?,?,?)",
+      [stars, comment, decoded.sportsman, sportsground_id],
+    )
+    .catch((err) => {
+      console.log(err);
+    });
+  console.log([stars, comment, decoded.sportsman, sportsground_id]);
+  return true;
+}
+
 export default {
   createSportsground,
   updateSportsground,
+  addReviewSportsground,
 };
