@@ -15,7 +15,7 @@ const typeDefs = gql`
       country: String!
       email: String!
       password: String
-      vat_number: Int!
+      vat_number: String!
     ): Boolean
     updateSportsground(
       token: String!

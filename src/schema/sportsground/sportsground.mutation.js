@@ -12,7 +12,7 @@ async function createSportsground(_, args, { db, mailer, supabase }) {
   const { name, street, number, city, zip, country, email, password, vat_number } = args;
   const accountReference = "sports_ground_id";
 
-  let user = await User.getUserByEmail(email, db);
+  let user = await User.getByEmail(email, db);
   if (user && user[accountReference]) {
     throw new Error("User already exists");
   }
@@ -33,7 +33,7 @@ async function createSportsground(_, args, { db, mailer, supabase }) {
 
   if (!user) {
     await User.createUser({ email, password }, { db });
-    user = await User.getUserByEmail(email, db);
+    user = await User.getByEmail(email, db);
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 

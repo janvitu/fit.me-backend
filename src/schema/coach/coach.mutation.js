@@ -9,7 +9,7 @@ async function createCoach(_, args, { db, mailer }) {
   const { name, surname, vat_number, email, password } = args;
   const accountReference = "coach_id";
 
-  let user = await User.getUserByEmail(email, db);
+  let user = await User.getByEmail(email, db);
 
   if (user && user[accountReference]) {
     throw new Error("Email already exists");
@@ -21,7 +21,7 @@ async function createCoach(_, args, { db, mailer }) {
 
   if (!user) {
     await User.createUser({ email, password }, { db });
-    user = await User.getUserByEmail(email, db);
+    user = await User.getByEmail(email, db);
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 

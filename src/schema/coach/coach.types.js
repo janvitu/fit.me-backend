@@ -39,7 +39,7 @@ const typeDefs = gql`
     name: String!
     surname: String!
     published: Boolean!
-    vat_number: String
+    vat_number: Int
     phone: String
     address: Address
     specializations: [String]
