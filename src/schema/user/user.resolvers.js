@@ -1,72 +1,12 @@
 import argon2 from "argon2";
 import { getUserByEmail } from "../user/user.models";
-import { createToken, verifyToken } from "../../utils/token";
+import { verifyToken } from "../../utils/token";
 import { sendPasswordResetEmail } from "../../utils/sendPasswordResetEmail";
-import { getCoach } from "../coach/coach.models";
-import { getSportsground } from "../sportsground/sportsground.models";
-import { getSportsman } from "../sportsman/sportsman.models";
+import userQuery from "./user.query";
 
 const resolvers = {
   Query: {
-    userSignIn: async (_, args, { db }) => {
-      const { email, password, accType = "sportsman" } = args;
-
-      const user = await getUserByEmail(email, db);
-
-      if (!user) {
-        throw new Error("User not found");
-      }
-
-      if (!user[`${accType}_id`]) {
-        throw new Error(`User does not have account type of '${accType}'`);
-      }
-
-      if (!user.verified) {
-        throw new Error("Unable to sign in. Please verify your email.");
-      }
-
-      const isValidPassword = await argon2.verify(user.password, password);
-
-      if (!isValidPassword) {
-        throw new Error("Invalid password");
-      }
-
-      const token = createToken({
-        id: user.id,
-        email: user.email,
-        sportsman: user.sportsman_id,
-        coach: user.coach_id,
-        sportsground: user.sports_ground_id,
-      });
-      return {
-        token: token,
-        user: { ...user },
-      };
-    },
-    getUser: async (_, args, { db }) => {
-      const { email } = args;
-      const user = await getUserByEmail(email, db);
-
-      const sportsman = await getSportsman(user.sportsman_id, db);
-      const coach = await getCoach(user.coach_id, db);
-      const sportsground = await getSportsground(user.sports_ground_id, db);
-
-      return {
-        ...user,
-        sportsman: {
-          ...sportsman,
-          address: {
-            ...sportsmanAddress,
-          },
-        },
-        coach: {
-          ...coach,
-        },
-        sportsground: {
-          ...sportsground,
-        },
-      };
-    },
+    ...userQuery,
   },
   Mutation: {
     forgotenPassword: async (_, args, { db, mailer }) => {
