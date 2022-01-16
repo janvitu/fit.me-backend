@@ -22,14 +22,17 @@ async function createSportsground(_, args, { db, mailer, supabase }) {
   const username = createUsername(name);
   const insertSportsground = await Sportsground.create(name, username, vat_number, db);
   const sportsgroundId = insertSportsground.insertId;
-  const address = await insertAddress({
-    street,
-    no: number,
-    city,
-    zip_code: zip,
-    region: null,
-    state: country,
-  });
+  const address = await insertAddress(
+    {
+      street,
+      no: number,
+      city,
+      zip_code: zip,
+      region: null,
+      state: country,
+    },
+    db,
+  );
   const addressId = address.insertId;
   await Sportsground.updateAddressReference(sportsgroundId, addressId, db);
 

@@ -52,11 +52,11 @@ export async function getSportgroundReviews(sportsground_id, db) {
 }
 
 export async function createSportsground(name, username, vat_number, db) {
-  await db.query("INSERT INTO sports_ground (name, username, vat_number) VALUES (?, ?, ?)", [
-    name,
-    username,
-    vat_number,
-  ]);
+  const res = await db.query(
+    "INSERT INTO sports_ground (name, username, vat_number) VALUES (?, ?, ?)",
+    [name, username, vat_number],
+  );
+  return res;
 }
 
 export async function removeSportsgroundTag(sportsground_id, tag_id, db) {
