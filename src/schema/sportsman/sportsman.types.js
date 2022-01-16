@@ -5,7 +5,7 @@ const typeDefs = gql`
     getSportsman(id: ID!): Sportsman
   }
   type Mutation {
-    createSportsman(name: String!, surname: String!, email: String!, password: String!): Boolean!
+    createSportsman(name: String!, surname: String!, email: String!, password: String): Boolean!
     updateSportsman(
       token: String!
       name: String

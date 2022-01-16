@@ -26,9 +26,23 @@ export async function getCoachReviews(id, db) {
   return reviews;
 }
 
+export async function createCoach(name, surname, username, vat_number, db) {
+  const coachRef = await db.query(
+    "INSERT INTO coach (name, surname, username, vat_number) VALUES (?, ?, ?, ?)",
+    [name, surname, username, vat_number],
+  );
+  return coachRef;
+}
+
+export async function updateAccountReference(profileImgId, coachId, db) {
+  await db.query("UPDATE sportsman SET profile_photo_id = ? WHERE id = ?", [profileImgId, coachId]);
+}
+
 export default {
   get: getCoach,
   getByUsername: getCoachByUsername,
   getAll: getCoaches,
   getReviews: getCoachReviews,
+  create: createCoach,
+  updateAccountReference,
 };

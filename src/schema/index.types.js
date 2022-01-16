@@ -6,6 +6,7 @@ import { typeDefs as EventTypeDefs } from "./event";
 import { gql } from "apollo-server-core";
 
 const tempTypeDef = gql`
+  scalar Upload
   type Address {
     id: ID
     street: String

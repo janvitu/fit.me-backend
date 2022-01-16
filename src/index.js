@@ -1,12 +1,13 @@
-import "./utils/dotenvContext.js";
+import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import mariadb from "mariadb";
-import { supabase } from "./utils/supabaseClient";
+import { createClient } from "@supabase/supabase-js";
 
 import cookieParser from "cookie-parser";
 import { ApolloServer } from "apollo-server-express";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
+import { graphqlUploadExpress } from "graphql-upload";
 
 import nodemailer from "nodemailer";
 import { typeDefs, rootResolver } from "./schema";
@@ -14,6 +15,8 @@ import verifyEmail from "./middleware/verifyEmail.middleware";
 
 const main = async () => {
   const app = express();
+
+  dotenv.config();
 
   app.disable("x-powered-by");
   app.use(cors());
@@ -40,6 +43,8 @@ const main = async () => {
     },
   });
 
+  const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers: rootResolver,
@@ -63,7 +68,7 @@ const main = async () => {
   });
 
   await apolloServer.start();
-
+  app.use(graphqlUploadExpress());
   apolloServer.applyMiddleware({ app, cors: false });
 
   const port = process.env.PORT || 4000;

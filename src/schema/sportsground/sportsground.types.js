@@ -10,10 +10,11 @@ const typeDefs = gql`
       name: String!
       street: String!
       city: String!
+      number: String!
       zip: String!
       country: String!
       email: String!
-      password: String!
+      password: String
       vat_number: Int!
     ): Boolean
     updateSportsground(

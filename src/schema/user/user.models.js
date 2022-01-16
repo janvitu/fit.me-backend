@@ -23,6 +23,9 @@ export async function getUser(id, db) {
 
 export const getUserByEmail = async (email, db) => {
   const user = (await db.query("SELECT * FROM user WHERE email = ?", [email]))[0];
+  if (!user) {
+    return null;
+  }
   let sportsman = null;
   let coach = null;
   let sportsground = null;
@@ -35,8 +38,7 @@ export const getUserByEmail = async (email, db) => {
   if (user.sports_ground_id) {
     sportsground = await getSportsground(user.sports_ground_id, db);
   }
-
-  return { ...user, sportsman, coach, sportsground };
+  return { ...user, sportsman: sportsman, coach: coach, sportsground: sportsground };
 };
 
 export const createUser = async (args, { db }) => {
@@ -49,7 +51,7 @@ export const createUser = async (args, { db }) => {
 
 export const updateAccountReference = async (args, { db }) => {
   const { user, ref, accountReference } = args;
-  await db.query(`UPDATE user SET ${accountReference} = ? WHERE id = ?`, [ref.id, user.id]);
+  await db.query(`UPDATE user SET ${accountReference} = ? WHERE id = ?`, [ref, user.id]);
 
   return true;
 };

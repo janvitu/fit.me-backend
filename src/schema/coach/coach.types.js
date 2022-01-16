@@ -11,7 +11,7 @@ const typeDefs = gql`
       surname: String!
       vat_number: Int!
       email: String!
-      password: String!
+      password: String
     ): Boolean
     updateCoach(
       token: String!

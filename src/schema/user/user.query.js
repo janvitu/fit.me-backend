@@ -1,8 +1,5 @@
 import argon2 from "argon2";
-import { createToken, verifyToken } from "../../utils/token";
-import { getCoach } from "../coach/coach.models";
-import { getSportsground } from "../sportsground/sportsground.models";
-import { getSportsman } from "../sportsman/sportsman.models";
+import { createToken } from "../../utils/token";
 import jwt from "jsonwebtoken";
 
 import User from "./user.models";

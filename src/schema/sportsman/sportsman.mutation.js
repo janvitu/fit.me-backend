@@ -1,51 +1,46 @@
-import jwt from "jsonwebtoken";
-import { SUPABASE_IMG_STORAGE_OBJECT } from "../../consts";
-
+import { SUPABASE_STORAGE_PATH } from "../../consts";
 import User from "../user/user.models";
-import { createDicebearAvatar } from "../../utils/createDicebearAvatar";
+import Sportsman from "./sportsman.models";
 import sendVerifyEmail from "../../utils/sendVerificationMail";
 import { createUsername } from "../../utils/stringNormalization";
-import { supabase } from "../../utils/supabaseClient";
-import { createToken } from "../../utils/token";
+import { createToken, verifyToken } from "../../utils/token";
+import { uploadPhoto } from "../index.models.js";
+import { supabaseUploadAvatarImage } from "../../utils/supabase/avatarUpload";
 
-async function createSportsman(_, args, { db, mailer }) {
+async function createSportsman(_, args, { db, mailer, supabase }) {
   const { email, password, name, surname } = args;
   const accountReference = "sportsman_id";
 
-  let user = await User.getUserByEmail(email, db);
-
+  let user = await User.getByEmail(email, db);
   if (user && user[accountReference]) {
     throw new Error("User already exists");
   }
 
   const username = createUsername(name + surname);
-  await db.query("INSERT INTO sportsman (name, surname, username) VALUES (?, ?, ?)", [
-    name,
-    surname,
-    username,
-  ]);
-
-  const sportsman = (await db.query("SELECT * FROM sportsman where username = ?", [username]))[0];
+  const inserSportsman = Sportsman.create(name, surname, username, db);
+  const sportsmanId = inserSportsman.insertId;
 
   if (!user) {
-    await User.createUser({ email, password }, { db });
-    user = await User.getUserByEmail(email, db);
+    await User.create({ email, password }, { db });
+    user = await User.getByEmail(email, db);
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
-
-    const supabaseAvatarImg = await supabase.storage
-      .from(SUPABASE_IMG_STORAGE_OBJECT)
-      .upload(`${user.email}/${username}/avatar.svg`, createDicebearAvatar(username), {
-        contentType: "image/svg+xml",
-      });
   }
 
-  await User.updateAccountReference({ user, ref: sportsman, accountReference }, { db });
+  const supabaseAvatarImgRes = await supabaseUploadAvatarImage("sportsman", username, supabase);
+  const photo = {
+    location: `${SUPABASE_STORAGE_PATH}${supabaseAvatarImgRes.data.Key}`,
+    name: "avatar",
+  };
+  const avatarImgDatabaseRef = await uploadPhoto(photo, db);
+  await Sportsman.updateProfilePhotoReference(avatarImgDatabaseRef.insertId, sportsmanId, db);
+
+  await User.updateAccountReference({ user, ref: sportsmanId, accountReference }, { db });
 
   return true;
 }
 async function updateSportsman(_, args, { db }) {
   const { token, name, surname, phone, street, number, city, region, state, zip } = args;
-  const { id, email, sportsman } = jwt.verify(token, process.env.JWT_SECRET);
+  const { id, email, sportsman } = verifyToken(token);
   db.query(
     `UPDATE sportsman SET name = ?, surname = ?, phone = ?, street = ?, number = ?, city = ?, region = ?, state = ?, zip = ? WHERE id = ${sportsman}`,
     [name, surname, phone, street, number, city, region, state, zip],
