@@ -4,7 +4,7 @@ import User from "../user/user.models";
 import Coach from "./coach.models";
 import { createUsername } from "../../utils/stringNormalization";
 import jwt from "jsonwebtoken";
-import { updateAddress, uploadPhoto } from "../index.models";
+import { updateAddress, insertAddress, uploadPhoto } from "../index.models";
 import { supabaseUploadAvatarImage } from "../../utils/supabase/avatarUpload";
 
 async function createCoach(_, args, { db, mailer, supabase }) {
@@ -72,7 +72,13 @@ async function updateCoach(_, args, { db }) {
     `UPDATE coach SET name = ?, surname = ?, phone = ?, vat_number = ?, intro_text = ?, specialization = ?, description = ?, published = ? WHERE id = ${decoded.coach}`,
     [name, surname, phone, vat_number, intro_text, specialization, description, 1],
   );
-  await updateAddress(address, coach.address_id, db);
+  if (coach.address_id) {
+    await updateAddress(address, coach.address_id, db);
+  }
+  if (!coach.address_id) {
+    const addressRef = await insertAddress(address, db);
+    await Coach.updateAddressReference(addressRef.insertId, coach.id, db);
+  }
 
   return true;
 }

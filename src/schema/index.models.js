@@ -6,7 +6,7 @@ export async function getAddress(id, db) {
 export async function updateAddress(address, address_id, db) {
   await db.query(
     `UPDATE address SET street = ?, no = ?, city = ?, zip_code = ?, region = ?, state = ? WHERE id = ${address_id}`,
-    [address.street, address.no, address, city, address.zip_code, address.region, address.state],
+    [address.street, address.no, address.city, address.zip_code, address.region, address.state],
   );
 }
 
