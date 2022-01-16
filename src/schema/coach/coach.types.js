@@ -9,7 +9,7 @@ const typeDefs = gql`
     createCoach(
       name: String!
       surname: String!
-      vat_number: Int!
+      vat_number: String!
       email: String!
       password: String
     ): Boolean
@@ -18,7 +18,7 @@ const typeDefs = gql`
       name: String!
       surname: String!
       phone: String!
-      vat_number: Int!
+      vat_number: String!
       intro_text: String!
       specialization: String!
       description: String!
@@ -39,7 +39,7 @@ const typeDefs = gql`
     name: String!
     surname: String!
     published: Boolean!
-    vat_number: Int
+    vat_number: String
     phone: String
     address: Address
     specializations: [String]
