@@ -399,7 +399,7 @@ ALTER TABLE `message`
 -- Indexy pro tabulku `photo`
 --
 ALTER TABLE `photo`
-    ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Indexy pro tabulku `review`
