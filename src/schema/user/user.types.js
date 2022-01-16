@@ -2,8 +2,9 @@ import { gql } from "apollo-server-core";
 
 export default gql`
   type Query {
-    userSignIn(email: String!, password: String!, accType: String): UserResponse
+    userSignIn(email: String!, password: String!, accType: String!): UserResponse
     getUser(email: String!): User
+    getUserByToken(token: String!): User
   }
   type Mutation {
     forgotenPassword(email: String!): Boolean

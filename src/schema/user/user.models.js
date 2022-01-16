@@ -3,6 +3,15 @@ import { getCoach } from "../coach/coach.models";
 import { getSportsground } from "../sportsground/sportsground.models";
 import { getSportsman } from "../sportsman/sportsman.models";
 
+export async function getUser(id, db) {
+  const user = (await db.query("SELECT * FROM user WHERE id = ?", [id]))[0];
+  const sportsman = await getSportsman(user.sportsman_id, db);
+  const coach = await getCoach(user.coach_id, db);
+  const sportsground = await getSportsground(user.sports_ground_id, db);
+
+  return { ...user, sportsman, coach, sportsground };
+}
+
 export const getUserByEmail = async (email, db) => {
   const user = (await db.query("SELECT * FROM user WHERE email = ?", [email]))[0];
   const sportsman = await getSportsman(user.sportsman_id, db);
@@ -41,6 +50,7 @@ export const verifyUserEmail = async (args, { db }) => {
 };
 
 export default {
+  get: getUser,
   getByEmail: getUserByEmail,
   create: createUser,
   updateAccountReference,
