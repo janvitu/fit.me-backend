@@ -1,3 +1,5 @@
+import { SUPABASE_STORAGE_PATH } from "../../consts";
+
 import User from "../user/user.models";
 import Coach from "./coach.models";
 import { createUsername } from "../../utils/stringNormalization";
