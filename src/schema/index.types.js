@@ -26,7 +26,7 @@ const tempTypeDef = gql`
   }
   type Review {
     id: ID!
-    stars: Int!
+    stars: String!
     comment: String!
     datetime: Float!
     sportsman_id: Int!

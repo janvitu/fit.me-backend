@@ -3,20 +3,21 @@ import { createToken, verifyToken } from "../../utils/token";
 import { getCoach } from "../coach/coach.models";
 import { getSportsground } from "../sportsground/sportsground.models";
 import { getSportsman } from "../sportsman/sportsman.models";
+import jwt from "jsonwebtoken";
 
 import User from "./user.models";
 
 async function userSignIn(_, args, { db }) {
-  const { email, password, accountType } = args;
+  const { email, password, accType } = args;
 
-  const user = User.getByEmail(email, db);
+  const user = await User.getByEmail(email, db);
 
   if (!user) {
     throw new Error("User not found");
   }
 
-  if (!user[`${accountType}_id`]) {
-    throw new Error(`User does not have account type of '${accountType}'`);
+  if (!user[`${accType}_id`]) {
+    throw new Error(`User does not have account type of '${accType}'`);
   }
 
   if (!user.verified) {
@@ -52,11 +53,12 @@ async function getUser(_, args, { db }) {
 
 async function getUserByToken(_, args, { db }) {
   const { token } = args;
-  const decoded = verifyToken(token);
+  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
   const user = await User.get(decoded.id, db);
 
   return user;
+  // getUserByToken(token: String!): User
 }
 
 export default {

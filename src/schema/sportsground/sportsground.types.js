@@ -33,6 +33,13 @@ const typeDefs = gql`
       state: String
       zip: String
     ): Boolean
+    addReviewSportsground(
+      stars: String!
+      comment: String
+      sportsman_id: Int
+      sportsground_id: Int
+      token: String!
+    ): Boolean
   }
   type Sportsground {
     id: ID!

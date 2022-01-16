@@ -72,8 +72,32 @@ async function updateCoach(_, args, { db }) {
 
   return true;
 }
+async function addReviewCoach(_, args, { db }) {
+  const { token, stars, comment, coach_id } = args;
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!token) {
+    throw new Error("No token provided");
+  }
+  if (!decoded) {
+    throw new Error("Invalid token");
+  }
+  await db
+    .query("INSERT INTO review (stars, comment,  sportsman_id, coach_id) VALUES (?,?,?,?)", [
+      stars,
+      comment,
+      decoded.sportsman,
+      coach_id,
+    ])
+    .catch((err) => {
+      console.log(err);
+    });
+
+  return true;
+}
 
 export default {
   createCoach,
   updateCoach,
+  addReviewCoach,
 };

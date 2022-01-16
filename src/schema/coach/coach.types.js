@@ -27,6 +27,13 @@ const typeDefs = gql`
       description: String
       specializations: [String]
     ): Boolean
+    addReviewCoach(
+      stars: String!
+      comment: String
+      sportsman_id: Int
+      coach_id: Int
+      token: String!
+    ): Boolean
   }
   type Coach {
     id: ID!

@@ -5,18 +5,36 @@ import { getSportsman } from "../sportsman/sportsman.models";
 
 export async function getUser(id, db) {
   const user = (await db.query("SELECT * FROM user WHERE id = ?", [id]))[0];
-  const sportsman = await getSportsman(user.sportsman_id, db);
-  const coach = await getCoach(user.coach_id, db);
-  const sportsground = await getSportsground(user.sports_ground_id, db);
+  let sportsman = null;
+  let coach = null;
+  let sportsground = null;
+  if (user.sportsman_id) {
+    sportsman = await getSportsman(user.sportsman_id, db);
+  }
+  if (user.coach_id) {
+    coach = await getCoach(user.coach_id, db);
+  }
+  if (user.sports_ground_id) {
+    sportsground = await getSportsground(user.sports_ground_id, db);
+  }
 
   return { ...user, sportsman, coach, sportsground };
 }
 
 export const getUserByEmail = async (email, db) => {
   const user = (await db.query("SELECT * FROM user WHERE email = ?", [email]))[0];
-  const sportsman = await getSportsman(user.sportsman_id, db);
-  const coach = await getCoach(user.coach_id, db);
-  const sportsground = await getSportsground(user.sports_ground_id, db);
+  let sportsman = null;
+  let coach = null;
+  let sportsground = null;
+  if (user.sportsman_id) {
+    sportsman = await getSportsman(user.sportsman_id, db);
+  }
+  if (user.coach_id) {
+    coach = await getCoach(user.coach_id, db);
+  }
+  if (user.sports_ground_id) {
+    sportsground = await getSportsground(user.sports_ground_id, db);
+  }
 
   return { ...user, sportsman, coach, sportsground };
 };
