@@ -38,6 +38,10 @@ export async function updateProfilePhotoReference(profileImgId, coachId, db) {
   await db.query("UPDATE coach SET profile_photo_id = ? WHERE id = ?", [profileImgId, coachId]);
 }
 
+export async function updateAddressReference(addressId, coachId, db) {
+  await db.query("UPDATE coach SET address_id = ? WHERE id = ?", [addressId, coachId]);
+}
+
 export default {
   get: getCoach,
   getByUsername: getCoachByUsername,
@@ -45,4 +49,5 @@ export default {
   getReviews: getCoachReviews,
   create: createCoach,
   updateProfilePhotoReference,
+  updateAddressReference,
 };
