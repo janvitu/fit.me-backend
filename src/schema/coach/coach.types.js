@@ -28,7 +28,7 @@ const typeDefs = gql`
       specializations: [String]
     ): Boolean
     addReviewCoach(
-      stars: Int!
+      stars: String!
       comment: String
       sportsman_id: Int
       coach_id: Int

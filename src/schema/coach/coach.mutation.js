@@ -92,7 +92,7 @@ async function addReviewCoach(_, args, { db }) {
     .catch((err) => {
       console.log(err);
     });
-  console.log([stars, comment, decoded.sportsman, coach_id]);
+
   return true;
 }
 
