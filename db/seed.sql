@@ -826,22 +826,22 @@ INSERT INTO `sports_ground` (`id`, `username`, `name`, `published`, `opening_hou
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `verified`, `password_reset_hash`, `coach_id`, `sportsman_id`, `sports_ground_id`) VALUES
-(1, 'keiji@sbcglobal.net', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 1, NULL, NULL, 1, NULL),
-(2, 'cyrus@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 2, NULL),
-(3, 'lishoy@hotmail.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 3, NULL),
-(4, 'goldberg@verizon.net', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 4, NULL),
-(5, 'valdez@yahoo.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 5, NULL),
-(6, 'kidehen@verizon.net', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 6, NULL),
-(7, 'grolschie@aol.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 7, NULL),
-(8, 'danneng@msn.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 8, NULL),
-(9, 'kjetilk@icloud.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 9, NULL),
-(10, 'aegreene@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, 10, NULL),
-(11, 'cgcra@me.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, NULL, 1),
-(12, 'suresh@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, NULL, 2),
-(13, 'simone@att.net', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, NULL, 3),
-(14, 'smartfart@live.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, NULL, 4),
-(15, 'lpalmer@gmail.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, NULL, 5),
-(16, 'lishoy@hotmail.com', '$argon2i$v=19$m=16,t=2,p=1$dGVzdDEyMzQ1$4CsBrhGxu26Eyp7biRJCfw', 0, NULL, NULL, NULL, 6);
+(1, 'keiji@sbcglobal.net', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 1, NULL, NULL, 1, NULL),
+(2, 'cyrus@gmail.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 1, NULL, NULL, 2, NULL),
+(3, 'lishoy@hotmail.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 3, NULL),
+(4, 'goldberg@verizon.net', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 4, NULL),
+(5, 'valdez@yahoo.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 5, NULL),
+(6, 'kidehen@verizon.net', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 6, NULL),
+(7, 'grolschie@aol.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 7, NULL),
+(8, 'danneng@msn.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 8, NULL),
+(9, 'kjetilk@icloud.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 9, NULL),
+(10, 'aegreene@gmail.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, 10, NULL),
+(11, 'cgcra@me.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, NULL, 1),
+(12, 'suresh@gmail.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, NULL, 2),
+(13, 'simone@att.net', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, NULL, 3),
+(14, 'smartfart@live.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, NULL, 4),
+(15, 'lpalmer@gmail.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, NULL, 5),
+(16, 'lishoy@hotmail.com', '$argon2i$v=19$m=4096,t=3,p=1$xNQNlGB+r721kFClbZy+aA$gWTPYj3gCFuyRJ07glFpCJgFJ8m824LN+CQMNYMA/LE', 0, NULL, NULL, NULL, 6);
 
 
 --
