@@ -1,5 +1,5 @@
 import argon2 from "argon2";
-import { createToken } from "../../utils/token";
+import { createToken, verifyToken } from "../../utils/token";
 import { getCoach } from "../coach/coach.models";
 import { getSportsground } from "../sportsground/sportsground.models";
 import { getSportsman } from "../sportsman/sportsman.models";
@@ -47,19 +47,20 @@ async function getUser(_, args, { db }) {
   const { email } = args;
   const user = await User.getByEmail(email, db);
 
-  const sportsman = await getSportsman(user.sportsman_id, db);
-  const coach = await getCoach(user.coach_id, db);
-  const sportsground = await getSportsground(user.sports_ground_id, db);
+  return user;
+}
 
-  return {
-    ...user,
-    sportsman,
-    coach,
-    sportsground,
-  };
+async function getUserByToken(_, args, { db }) {
+  const { token } = args;
+  const decoded = verifyToken(token);
+
+  const user = await User.get(decoded.id, db);
+
+  return user;
 }
 
 export default {
+  getUserByToken,
   userSignIn,
   getUser,
 };
