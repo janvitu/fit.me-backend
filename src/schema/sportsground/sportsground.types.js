@@ -34,10 +34,9 @@ const typeDefs = gql`
       zip: String
     ): Boolean
     addReviewSportsground(
-      stars: String!
-      comment: String
-      sportsman_id: Int
-      sportsground_id: Int
+      stars: Int!
+      comment: String!
+      sportsground_id: Int!
       token: String!
     ): Boolean
   }

@@ -14,26 +14,24 @@ const typeDefs = gql`
       password: String!
     ): Boolean
     updateCoach(
-      name: String
-      surname: String
-      phone: String
-      vat_number: Int
-      street: String
-      number: Int
-      city: String
-      region: String
-      state: String
-      zip: String
-      description: String
-      specializations: [String]
-    ): Boolean
-    addReviewCoach(
-      stars: String!
-      comment: String
-      sportsman_id: Int
-      coach_id: Int
       token: String!
+      name: String!
+      surname: String!
+      phone: String!
+      vat_number: Int!
+      intro_text: String!
+      specialization: String!
+      description: String!
+      street: String!
+      no: String!
+      city: String!
+      zip_code: String!
+      region: String!
+      state: String!
+      cover_photo: Upload
+      profile_photo: Upload
     ): Boolean
+    addReviewCoach(stars: Int!, comment: String!, coach_id: Int!, token: String!): Boolean
   }
   type Coach {
     id: ID!
