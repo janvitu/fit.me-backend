@@ -1,8 +1,8 @@
 import Sportsman from "./sportsman.models";
 
-export function getSportsman(_, args, { db }) {
-  const { username } = args;
-  const sportsman = Sportsman.getSportsman(username, db);
+export async function getSportsman(_, args, { db }) {
+  const { id } = args;
+  const sportsman = await Sportsman.get(id, db);
 
   return sportsman;
 }
