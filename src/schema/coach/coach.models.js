@@ -1,7 +1,7 @@
 import { getPhoto } from "../index.models";
 
 export const getCoach = async (id, db) => {
-  const coach = await db.query("SELECT * FROM coach WHERE id = ?", [id])[0];
+  const coach = (await db.query("SELECT * FROM coach WHERE id = ?", [id]))[0];
   const profile_photo = await getPhoto(coach.profile_photo_id, db);
 
   return { ...coach, profile_photo };
@@ -34,8 +34,8 @@ export async function createCoach(name, surname, username, vat_number, db) {
   return coachRef;
 }
 
-export async function updateAccountReference(profileImgId, coachId, db) {
-  await db.query("UPDATE sportsman SET profile_photo_id = ? WHERE id = ?", [profileImgId, coachId]);
+export async function updateProfilePhotoReference(profileImgId, coachId, db) {
+  await db.query("UPDATE coach SET profile_photo_id = ? WHERE id = ?", [profileImgId, coachId]);
 }
 
 export default {
@@ -44,5 +44,5 @@ export default {
   getAll: getCoaches,
   getReviews: getCoachReviews,
   create: createCoach,
-  updateAccountReference,
+  updateProfilePhotoReference,
 };

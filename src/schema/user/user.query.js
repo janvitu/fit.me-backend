@@ -50,7 +50,7 @@ async function getUser(_, args, { db }) {
 
 async function getUserByToken(_, args, { db }) {
   const { token } = args;
-  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
   const user = await User.get(decoded.id, db);
 

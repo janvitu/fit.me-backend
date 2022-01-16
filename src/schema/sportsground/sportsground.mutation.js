@@ -39,7 +39,7 @@ async function createSportsground(_, args, { db, mailer, supabase }) {
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 
-  const supabaseAvatarImgRes = await supabaseUploadAvatarImage("sportsground", username, db);
+  const supabaseAvatarImgRes = await supabaseUploadAvatarImage("sportsground", username, supabase);
   const photo = {
     location: `${SUPABASE_STORAGE_PATH}${supabaseAvatarImgRes.data.Key}`,
     name: "avatar",

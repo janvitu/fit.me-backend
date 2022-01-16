@@ -7,12 +7,11 @@ import jwt from "jsonwebtoken";
 import { updateAddress, uploadPhoto } from "../index.models";
 import { supabaseUploadAvatarImage } from "../../utils/supabase/avatarUpload";
 
-async function createCoach(_, args, { db, mailer }) {
+async function createCoach(_, args, { db, mailer, supabase }) {
   const { name, surname, vat_number, email, password } = args;
   const accountReference = "coach_id";
 
   let user = await User.getByEmail(email, db);
-
   if (user && user[accountReference]) {
     throw new Error("Email already exists");
   }
@@ -20,20 +19,20 @@ async function createCoach(_, args, { db, mailer }) {
   const username = createUsername(name + surname);
   const insertCoach = await Coach.create(name, surname, username, vat_number, db);
   const coachId = insertCoach.insertId;
-
   if (!user) {
     await User.createUser({ email, password }, { db });
     user = await User.getByEmail(email, db);
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
 
-  const supabaseAvatarImgRes = await supabaseUploadAvatarImage("coach", username, db);
+  const supabaseAvatarImgRes = await supabaseUploadAvatarImage("coach", username, supabase);
+  console.log(supabaseAvatarImgRes);
   const photo = {
     location: `${SUPABASE_STORAGE_PATH}${supabaseAvatarImgRes.data.Key}`,
     name: "avatar",
   };
   const avatarImgDatabaseRef = await uploadPhoto(photo, db);
-  await Coach.updateAccountReference(avatarImgDatabaseRef.insertId, coachId, db);
+  await Coach.updateProfilePhotoReference(avatarImgDatabaseRef.insertId, coachId, db);
 
   await User.updateAccountReference({ user, ref: coachId, accountReference }, { db });
 
