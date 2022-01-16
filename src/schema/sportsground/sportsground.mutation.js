@@ -28,7 +28,7 @@ async function createSportsground(_, args, { db, mailer, supabase }) {
     city,
     zip_code: zip,
     region: null,
-    country,
+    state: country,
   });
   const addressId = address.insertId;
   await Sportsground.updateAddressReference(sportsgroundId, addressId, db);

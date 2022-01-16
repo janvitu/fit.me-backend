@@ -39,7 +39,7 @@ CREATE TABLE `address` (
                            `no` int(11) NOT NULL,
                            `city` varchar(255) COLLATE utf8_czech_ci NOT NULL,
                            `zip_code` int(11) NOT NULL,
-                           `region` varchar(255) COLLATE utf8_czech_ci NOT NULL,
+                           `region` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
                            `state` varchar(255) COLLATE utf8_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
