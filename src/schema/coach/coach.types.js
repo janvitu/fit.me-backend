@@ -42,7 +42,7 @@ const typeDefs = gql`
     vat_number: String
     phone: String
     address: Address
-    specializations: [String]
+    specialization: String
     intro_text: String
     reqirements: [String]
     description: String

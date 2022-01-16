@@ -1,6 +1,5 @@
 import argon2 from "argon2";
-import { createToken } from "../../utils/token";
-import jwt from "jsonwebtoken";
+import { createToken, verifyToken } from "../../utils/token";
 
 import User from "./user.models";
 
@@ -41,6 +40,23 @@ async function userSignIn(_, args, { db }) {
   };
 }
 
+async function refreshToken(_, args, { db }) {
+  const { token } = args;
+  const decoded = verifyToken(token);
+
+  const user = await User.get(decoded.id, db);
+
+  const newToken = createToken({
+    id: user.id,
+    email: user.email,
+    sportsman: user.sportsman_id,
+    coach: user.coach_id,
+    sportsground: user.sports_ground_id,
+  });
+
+  return newToken;
+}
+
 async function getUser(_, args, { db }) {
   const { email } = args;
   const user = await User.getByEmail(email, db);
@@ -50,7 +66,7 @@ async function getUser(_, args, { db }) {
 
 async function getUserByToken(_, args, { db }) {
   const { token } = args;
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const decoded = verifyToken(token);
 
   const user = await User.get(decoded.id, db);
 
@@ -60,6 +76,7 @@ async function getUserByToken(_, args, { db }) {
 
 export default {
   getUserByToken,
+  refreshToken,
   userSignIn,
   getUser,
 };

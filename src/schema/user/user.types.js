@@ -3,6 +3,7 @@ import { gql } from "apollo-server-core";
 export default gql`
   type Query {
     userSignIn(email: String!, password: String!, accType: String): UserResponse
+    refreshToken(token: String!): String
     getUser(email: String!): User
     getUserByToken(token: String!): User
   }
