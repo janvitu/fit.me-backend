@@ -28,11 +28,11 @@ const typeDefs = gql`
       vat_number: String!
       description: String!
       street: String!
-      no: Int!
+      no: String!
       city: String!
       region: String!
       state: String!
-      zip_code: Int!
+      zip_code: String!
       cover_photo_url: String
       profile_photo_url: String
     ): Boolean
