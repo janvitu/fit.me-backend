@@ -40,8 +40,8 @@ async function getCoach(_, args, { db }) {
 
 async function getCoaches(_, args, { db }) {
   const coaches = await Coach.getAll(db);
-
-  const coachesFull = coaches.map(async (coach) => {
+  const publishedCoaches = coaches.filter((coach) => coach.published);
+  const coachesFull = publishedCoaches.map(async (coach) => {
     if (coach.published) {
       const reviews = await Coach.getReviews(coach.id, db);
       const ratingsStars = reviews.map((review) => review.stars);
