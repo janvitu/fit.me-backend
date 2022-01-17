@@ -45,3 +45,34 @@ yarn build
 ```bash
 yarn build:watch
 ```
+
+## ENV config
+
+### JWT
+
+- JWT_SECRET
+
+### database connection
+
+- DB_HOST
+- DB_PORT
+- DB_USER
+- MYSQL_PASSWORD
+- DB_NAME
+
+
+### URLS
+
+- VERIFY_MAIL_URL
+- RESET_PASSWORD_MAIL_URL
+- REDIRECT_URL
+
+### Google SMTP options
+
+- G_USER
+- G_PASS
+
+### Supabase connection options
+
+- SUPABASE_URL
+- SUPABASE_ANON_KEY
