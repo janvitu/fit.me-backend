@@ -49,8 +49,8 @@ const typeDefs = gql`
     username: String!
     phone: String
     web: String
-    opening_hours_from: Float
-    opening_hours_to: Float
+    opening_hours_from: String
+    opening_hours_to: String
     address_id: ID
     address: Address
     description: String
