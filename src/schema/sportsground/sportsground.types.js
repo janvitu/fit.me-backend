@@ -24,6 +24,8 @@ const typeDefs = gql`
       opening_hours_to: String!
       web: String!
       phone: String!
+      intro_text: String!
+      vat_number: String!
       description: String!
       street: String!
       no: String!
