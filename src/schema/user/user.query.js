@@ -66,13 +66,11 @@ async function getUser(_, args, { db }) {
 
 async function getUserByToken(_, args, { db }) {
   const { token } = args;
-  console.log(token);
   const decoded = verifyToken(token);
 
   const user = await User.get(decoded.id, db);
-
+  console.log(user);
   return user;
-  // getUserByToken(token: String!): User
 }
 
 export default {

@@ -20,7 +20,7 @@ async function createCoach(_, args, { db, mailer, supabase }) {
   const insertCoach = await Coach.create(name, surname, username, vat_number, db);
   const coachId = insertCoach.insertId;
   if (!user) {
-    await User.createUser({ email, password }, { db });
+    await User.create({ email, password }, { db });
     user = await User.getByEmail(email, db);
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
