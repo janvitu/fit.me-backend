@@ -6,7 +6,7 @@ import { createUsername } from "../../utils/stringNormalization";
 import jwt from "jsonwebtoken";
 import { uploadPhoto } from "../index.models";
 import { supabaseUploadAvatarImage } from "../../utils/supabase/avatarUpload";
-import { sendVerifyEmail } from "../../utils/mailer";
+import sendVerifyEmail from "../utils/sendVerificationMail";
 
 async function createCoach(_, args, { db, mailer, supabase }) {
   const { name, surname, vat_number, email, password } = args;
