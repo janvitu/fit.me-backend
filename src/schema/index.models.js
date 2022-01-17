@@ -29,6 +29,5 @@ export async function uploadPhoto(photo, db) {
     photo.location,
     photo.name,
   ]);
-  console.log(res);
   return res;
 }

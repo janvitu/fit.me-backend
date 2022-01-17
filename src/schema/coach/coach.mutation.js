@@ -26,7 +26,6 @@ async function createCoach(_, args, { db, mailer, supabase }) {
   }
 
   const supabaseAvatarImgRes = await supabaseUploadAvatarImage("coach", username, supabase);
-  console.log(supabaseAvatarImgRes);
   const photo = {
     location: `${SUPABASE_STORAGE_PATH}${supabaseAvatarImgRes.data.Key}`,
     name: "avatar",

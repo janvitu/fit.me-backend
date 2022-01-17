@@ -1,12 +1,9 @@
 import sportsmanMutation from "./sportsman.mutation";
+import sportsmanQuery from "./sportsman.query";
 
 const resolvers = {
   Query: {
-    // getSportsman: async (_, args, { db }) => {
-    //   const { id } = args;
-    //   const sportsman = await db.query("SELECT * FROM sportsman WHERE id = ?", [id]);
-    //   return sportsman[0];
-    // },
+    ...sportsmanQuery,
   },
   Mutation: {
     ...sportsmanMutation,

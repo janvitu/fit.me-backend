@@ -6,3 +6,7 @@ export async function getSportsman(_, args, { db }) {
 
   return sportsman;
 }
+
+export default {
+  getSportsman,
+};

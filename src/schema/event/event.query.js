@@ -1,6 +1,5 @@
 import Sportsground from "../sportsground/sportsground.models";
 import Event from "./event.models";
-import Coach from "../coach/coach.models";
 
 async function getEvent(_, args, { db }) {
   const { id } = args;
