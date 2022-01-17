@@ -23,6 +23,13 @@ async function getSportsground(_, args, { db }) {
 
   const ratingsStars = reviews.map((review) => review.stars);
   const rating = roundNumber(averageRating(ratingsStars), 1) || 0;
+  let openningHours = "";
+
+  if (sportsground.opening_hours_from || sportsground.opening_hours_to) {
+    openningHours = `${sportsground.opening_hours_from
+      .substring(0, 5)
+      .replace(/^0+/, "")} až ${sportsground.opening_hours_to.substring(0, 5).replace(/^0+/, "")}`;
+  }
 
   const details = [
     {
@@ -43,11 +50,7 @@ async function getSportsground(_, args, { db }) {
     },
     {
       title: "Otevírací doba",
-      value: `${sportsground.opening_hours_from
-        .substring(0, 5)
-        .replace(/^0+/, "")} až ${sportsground.opening_hours_to
-        .substring(0, 5)
-        .replace(/^0+/, "")}`,
+      value: openningHours,
     },
   ];
 
