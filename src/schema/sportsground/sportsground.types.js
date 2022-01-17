@@ -26,7 +26,7 @@ const typeDefs = gql`
       phone: String!
       description: String!
       street: String!
-      number: Int!
+      no: Int!
       city: String!
       region: String!
       state: String!
