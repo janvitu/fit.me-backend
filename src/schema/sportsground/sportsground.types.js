@@ -55,6 +55,7 @@ const typeDefs = gql`
     address: Address
     description: String
     intro_text: String
+    vat_number: String
     tags: [Tag]
     rating: String
     reviews: [Review]
