@@ -4,7 +4,7 @@ import User from "../user/user.models";
 import Coach from "./coach.models";
 import { createUsername } from "../../utils/stringNormalization";
 import jwt from "jsonwebtoken";
-import { updateAddress, insertAddress, uploadPhoto } from "../index.models";
+import { uploadPhoto } from "../index.models";
 import { supabaseUploadAvatarImage } from "../../utils/supabase/avatarUpload";
 
 async function createCoach(_, args, { db, mailer, supabase }) {

@@ -45,5 +45,4 @@ export default {
   getReviews: getCoachReviews,
   create: createCoach,
   updateProfilePhotoReference,
-  updateAddressReference,
 };
