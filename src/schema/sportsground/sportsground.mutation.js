@@ -69,7 +69,6 @@ async function updateSportsground(_, args, { db }) {
     address,
     cover_photo,
     profile_photo,
-    tags,
   } = args;
   if (!token) {
     throw new Error("No token provided");
@@ -86,22 +85,6 @@ async function updateSportsground(_, args, { db }) {
     [name, 1, intro_text, openning_hours_from, openning_hours_to, web, phone, vat_number, description],
   );
   await updateAddress(address, sportsground.address_id, db);
-
-  const sportstgroundTags = await Sportsground.getTags(sportsground.id, db);
-  const tagIds = tags.map((tag) => {
-    const id = Sportsground.getTagByName(tag, db);
-    return id;
-  });
-  sportstgroundTags.forEach(async (tag) => {
-    if (!tagIds.includes(tag.id)) {
-      await Sportsground.removeTag(decoded.sportsground, tag.id, db);
-    }
-  });
-  tagIds.forEach(async (tagId) => {
-    if (!sportstgroundTags.map((tag) => tag.id).includes(tagId)) {
-      await Sportsground.addTag(decoded.sportsground, tagId, db);
-    }
-  });
 
   return true;
 }

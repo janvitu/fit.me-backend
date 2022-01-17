@@ -27,7 +27,6 @@ const typeDefs = gql`
       description: String!
       street: String!
       number: Int!
-      tags: [String]!
       city: String!
       region: String!
       state: String!
