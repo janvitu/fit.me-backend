@@ -17,7 +17,7 @@ async function createSportsman(_, args, { db, mailer, supabase }) {
   }
 
   const username = createUsername(name + surname);
-  const inserSportsman = Sportsman.create(name, surname, username, db);
+  const inserSportsman = await Sportsman.create(name, surname, username, db);
   const sportsmanId = inserSportsman.insertId;
 
   if (!user) {
