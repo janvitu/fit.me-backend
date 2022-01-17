@@ -85,17 +85,6 @@ async function updateSportsground(_, args, { db }) {
   }
   const sportsground = await Sportsground.get(decoded.sportsground, db);
 
-  console.log([
-    name,
-    1,
-    intro_text,
-    opening_hours_from,
-    opening_hours_to,
-    web,
-    phone,
-    vat_number,
-    description,
-  ]);
   // prettier-ignore
   await db.query(
     `UPDATE sports_ground SET name = ?, published = ?, intro_text = ?, opening_hours_from = ?, opening_hours_to = ?, web = ?, phone = ?, vat_number = ?, description = ? WHERE id = ${decoded.sportsground}`,
