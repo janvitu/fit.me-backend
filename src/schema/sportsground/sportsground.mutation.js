@@ -60,8 +60,8 @@ async function updateSportsground(_, args, { db }) {
     token,
     intro_text,
     name,
-    openning_hours_from,
-    openning_hours_to,
+    opening_hours_from,
+    opening_hours_to,
     web,
     phone,
     vat_number,
@@ -75,6 +75,7 @@ async function updateSportsground(_, args, { db }) {
     cover_photo,
     profile_photo,
   } = args;
+
   if (!token) {
     throw new Error("No token provided");
   }
@@ -88,8 +89,8 @@ async function updateSportsground(_, args, { db }) {
     name,
     1,
     intro_text,
-    openning_hours_from,
-    openning_hours_to,
+    opening_hours_from,
+    opening_hours_to,
     web,
     phone,
     vat_number,
@@ -98,7 +99,7 @@ async function updateSportsground(_, args, { db }) {
   // prettier-ignore
   await db.query(
     `UPDATE sports_ground SET name = ?, published = ?, intro_text = ?, opening_hours_from = ?, opening_hours_to = ?, web = ?, phone = ?, vat_number = ?, description = ? WHERE id = ${decoded.sportsground}`,
-    [name, 1, intro_text, openning_hours_from, openning_hours_to, web, phone, vat_number, description],
+    [name, 1, intro_text, opening_hours_from, opening_hours_to, web, phone, vat_number, description],
   );
   const address = { street, city, no, region, state, zip_code };
   await updateAddress(address, sportsground.address_id, db);

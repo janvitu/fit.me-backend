@@ -20,8 +20,8 @@ const typeDefs = gql`
     updateSportsground(
       token: String!
       name: String!
-      openning_hours_from: String!
-      openning_hours_to: String!
+      opening_hours_from: String!
+      opening_hours_to: String!
       web: String!
       phone: String!
       intro_text: String!
