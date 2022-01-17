@@ -48,6 +48,10 @@ yarn build:watch
 
 ## ENV config
 
+### JWT
+
+- JWT_SECRET
+
 ### database connection
 
 - DB_HOST
@@ -55,7 +59,7 @@ yarn build:watch
 - DB_USER
 - MYSQL_PASSWORD
 - DB_NAME
-- JWT_SECRET
+
 
 ### URLS
 
