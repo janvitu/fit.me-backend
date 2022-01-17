@@ -22,12 +22,6 @@ const typeDefs = gql`
       intro_text: String!
       specialization: String!
       description: String!
-      street: String!
-      no: String!
-      city: String!
-      zip_code: String!
-      region: String!
-      state: String!
       cover_photo: Upload
       profile_photo: Upload
     ): Boolean

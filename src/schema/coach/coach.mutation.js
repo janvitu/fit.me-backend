@@ -49,12 +49,6 @@ async function updateCoach(_, args, { db }) {
     intro_text,
     specialization,
     description,
-    street,
-    no,
-    city,
-    zip_code,
-    region,
-    state,
     cover_photo,
     profile_photo,
   } = args;
@@ -66,19 +60,11 @@ async function updateCoach(_, args, { db }) {
   if (!decoded) {
     throw new Error("Invalid token");
   }
-  const address = { street, no, city, zip_code, region, state };
   const coach = await Coach.get(decoded.coach, db);
   await db.query(
     `UPDATE coach SET name = ?, surname = ?, phone = ?, vat_number = ?, intro_text = ?, specialization = ?, description = ?, published = ? WHERE id = ${decoded.coach}`,
     [name, surname, phone, vat_number, intro_text, specialization, description, 1],
   );
-  if (coach.address_id) {
-    await updateAddress(address, coach.address_id, db);
-  }
-  if (!coach.address_id) {
-    const addressRef = await insertAddress(address, db);
-    await Coach.updateAddressReference(addressRef.insertId, coach.id, db);
-  }
 
   return true;
 }
