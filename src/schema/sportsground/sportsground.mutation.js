@@ -89,7 +89,7 @@ async function updateSportsground(_, args, { db }) {
 
   const sportstgroundTags = await Sportsground.getTags(sportsground.id, db);
   const tagIds = tags.map((tag) => {
-    const id = Sportsground.getTagByName(tag.name, db);
+    const id = Sportsground.getTagByName(tag, db);
     return id;
   });
   sportstgroundTags.forEach(async (tag) => {

@@ -19,20 +19,21 @@ const typeDefs = gql`
     ): Boolean
     updateSportsground(
       token: String!
-      name: String
-      opening_hours_from: String
-      opening_hours_to: String
-      web: String
-      phone: String
-      description: String
+      name: String!
+      opening_hours_from: String!
+      opening_hours_to: String!
+      web: String!
+      phone: String!
+      description: String!
+      street: String!
+      number: Int!
+      tags: [String]!
+      city: String!
+      region: String!
+      state: String!
+      zip: String!
       cover_photo_url: String
       profile_photo_url: String
-      street: String
-      number: Int
-      city: String
-      region: String
-      state: String
-      zip: String
     ): Boolean
     addReviewSportsground(
       stars: Int!
@@ -45,6 +46,10 @@ const typeDefs = gql`
     id: ID!
     name: String!
     username: String!
+    phone: String
+    web: String
+    opening_hours_from: Float
+    opening_hours_to: Float
     address_id: ID
     address: Address
     description: String

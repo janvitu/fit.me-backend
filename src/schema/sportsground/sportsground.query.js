@@ -2,6 +2,8 @@ import Sportsground from "./sportsground.models";
 import { getAddress } from "../index.models";
 import Sportsman from "../sportsman/sportsman.models";
 import { getPhoto } from "../index.models";
+import { roundNumber } from "../../utils/roundNumber";
+import { averageRating } from "../../utils/getAvarageRating";
 
 async function getSportsground(_, args, { db }) {
   const { username } = args;
@@ -18,9 +20,10 @@ async function getSportsground(_, args, { db }) {
   });
   const tags = await Sportsground.getTags(sportsground.id, db);
   const profile_photo = await getPhoto(sportsground.profile_photo_id, db);
-  const rating =
-    Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
-      10 || 0;
+
+  const ratingsStars = reviews.map((review) => review.stars);
+  const rating = roundNumber(averageRating(ratingsStars), 1) || 0;
+
   const details = [
     {
       title: "Sporty",
@@ -68,9 +71,9 @@ async function getSportsgrounds(_, args, { db }) {
       const reviews = await Sportsground.getReviews(sportsground.id, db);
       const tags = await Sportsground.getTags(sportsground.id, db);
       const profile_photo = await getPhoto(sportsground.profile_photo_id, db);
-      const rating =
-        Math.round((reviews.reduce((acc, review) => acc + review.stars, 0) / reviews.length) * 10) /
-          10 || 0;
+
+      const ratingsStars = reviews.map((review) => review.stars);
+      const rating = roundNumber(averageRating(ratingsStars), 1) || 0;
 
       return {
         ...sportsground,
