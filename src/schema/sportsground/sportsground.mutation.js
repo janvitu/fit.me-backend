@@ -66,7 +66,12 @@ async function updateSportsground(_, args, { db }) {
     phone,
     vat_number,
     description,
-    address,
+    street,
+    city,
+    no,
+    region,
+    state,
+    zip_code,
     cover_photo,
     profile_photo,
   } = args;
@@ -84,6 +89,7 @@ async function updateSportsground(_, args, { db }) {
     `UPDATE sports_ground SET name = ?, published = ?, intro_text = ?, openning_hours_from = ?, openning_hours_to = ?, web = ?, phone = ?, vat_number = ?, description = ? WHERE id = ${decoded.sportsground}`,
     [name, 1, intro_text, openning_hours_from, openning_hours_to, web, phone, vat_number, description],
   );
+  const address = { street, city, no, region, state, zip_code };
   await updateAddress(address, sportsground.address_id, db);
 
   return true;

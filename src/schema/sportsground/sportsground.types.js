@@ -30,7 +30,7 @@ const typeDefs = gql`
       city: String!
       region: String!
       state: String!
-      zip: String!
+      zip_code: String!
       cover_photo_url: String
       profile_photo_url: String
     ): Boolean
