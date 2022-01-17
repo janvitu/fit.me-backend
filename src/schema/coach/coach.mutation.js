@@ -4,6 +4,7 @@ import User from "../user/user.models";
 import Coach from "./coach.models";
 import { createUsername } from "../../utils/stringNormalization";
 import jwt from "jsonwebtoken";
+import { createToken } from "../../utils/token";
 import { uploadPhoto } from "../index.models";
 import { supabaseUploadAvatarImage } from "../../utils/supabase/avatarUpload";
 import sendVerifyEmail from "../../utils/sendVerificationMail";
