@@ -97,7 +97,7 @@ async function updateSportsground(_, args, { db }) {
   ]);
   // prettier-ignore
   await db.query(
-    `UPDATE sports_ground SET name = ?, published = ?, intro_text = ?, openning_hours_from = ?, openning_hours_to = ?, web = ?, phone = ?, vat_number = ?, description = ? WHERE id = ${decoded.sportsground}`,
+    `UPDATE sports_ground SET name = ?, published = ?, intro_text = ?, opening_hours_from = ?, opening_hours_to = ?, web = ?, phone = ?, vat_number = ?, description = ? WHERE id = ${decoded.sportsground}`,
     [name, 1, intro_text, openning_hours_from, openning_hours_to, web, phone, vat_number, description],
   );
   const address = { street, city, no, region, state, zip_code };
