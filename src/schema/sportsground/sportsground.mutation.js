@@ -37,7 +37,7 @@ async function createSportsground(_, args, { db, mailer, supabase }) {
   await Sportsground.updateAddressReference(sportsgroundId, addressId, db);
 
   if (!user) {
-    await User.createUser({ email, password }, { db });
+    await User.create({ email, password }, { db });
     user = await User.getByEmail(email, db);
     sendVerifyEmail(mailer, email, createToken({ id: user.id, email: user.email }));
   }
